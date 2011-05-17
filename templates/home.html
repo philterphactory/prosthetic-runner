@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load bleach_html %}
+{% load string_filters %}
+
+{% block body_classes %} home-page{% endblock body_classes %}
+
+{% block page_title %}
+<hgroup>
+    <h1>{% if not prosthetics %}No {% endif %}Prosthetics</h1>
+</hgroup>
+{% endblock page_title %}
+
+{% block page_header_content %}
+
+{% endblock page_header_content %}
+
+{% block page_body %}
+
+    <section>
+        {% if prosthetics %}
+            {% for prosthetic in prosthetics %}
+        <h2><em>{{ prosthetic }}</em> on <em>{{ prosthetic.server }}</em></h2>
+        <p class="boring">implementation class {{ prosthetic.classname }}</p>
+              {% if not prosthetic.get_class %}
+        <p class="warning">implementation is missing or failed to compile</p>
+              {% endif %}
+              
+        <div class="description">
+              {{ prosthetic.description|bleach_html }}
+        </div>
+            
+        <p class="more"><a href="{% url webapp.views.prosthetic prosthetic.id %}">More details..</a>
+            {% endfor %}
+        {% endif %}
+    </section>
+
+{% endblock page_body %}
+
+{% if missing %}
+{% block page_footer %}
+    <footer>
+
+        <h2><em>missing</em> prosthetics</h2>
+        
+        <p>You have prosthetic classes on your system that are not configured:</p>
+        <ul>
+    {% for m in missing %}
+            <li>
+                <dl>
+                    <dt>name</dt><dd>{{ m.name }}</dd>
+                    <dt>class</dt><dd></dd>{{ m.classname }}</dd>
+                    <dt>description</dt><dd>{% if m.doc %}<pre>{{ m.doc }}</pre>{% else %}no documentation{% endif %}</dd>
+                </dl>
+            </li>
+    {% endfor %}
+        </ul>
+        <p>Add them to this server with <a href="{% url admin:webapp_prosthetic_add %}?classname={{ missing.0.classname }}">the admin interface</a>.</p>
+    </footer>
+{% endblock page_footer %}
+{% endif %}

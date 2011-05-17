@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load bleach_html %}
+{% load string_filters %}
+
+{% block body_classes %} test-page{% endblock body_classes %}
+
+{% block page_title %}
+    <hgroup class="vcard">
+        <h1 class="fn">{% filter title %}{{ method|default:"call method" }}{% endfilter %}</h1>
+    </hgroup>
+{% endblock page_title %}
+
+{% block page_body %}
+
+<h2>call method</h2>
+<form method="get" action=".">
+  <input type="text" name="m" value="{{ method|default:"/1/weavr/state/" }}">
+</form>
+
+
+{% if method %}
+<h2>called {{ method }}</h2>
+
+{% if result %}
+<p>Result:</p>
+<pre>{{ result }}</pre>
+{% endif %}
+
+{% if result_error %}
+<p>Error:</p>
+<pre>{{ result_error }}</pre>
+{% endif %}
+
+{% endif %}
+
+{% endblock page_body %}
+

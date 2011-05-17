@@ -1,0 +1,7 @@
+app.yaml
+app.yaml.local
+media/static/version.txt
+
+*.pyc
+*~
+.DS_Store

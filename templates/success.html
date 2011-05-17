@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load bleach_html %}
+{% load string_filters %}
+
+{% block body_classes %} oauth-success-page{% endblock body_classes %}
+
+{% block page_title %}
+    <hgroup class="vcard">
+        <h1 class="fn">{% filter title %}{{ prosthetic.name|str_replace }}{% endfilter %}</h1>
+    </hgroup>
+{% endblock page_title %}
+
+{% block page_header_content %}
+    <div class="description">{{ prosthetic.description|bleach_html }}</div>
+{% endblock page_header_content %}
+
+{% block page_body %}
+
+    <section>
+        <p class="message">Prosthetic Transplant was Successful.</p>
+        <p><a class="big-button" href="{% url webapp.views.start_authorizing prosthetic.id %}">ADD TO ANOTHER WEAVR?</a></p>
+    </section>
+
+{% endblock page_body %}

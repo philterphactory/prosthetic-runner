@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load bleach_html %}
+{% load string_filters %}
+
+{% block body_classes %} prosthetic-page{% endblock body_classes %}
+
+{% block page_title %}
+    <hgroup class="vcard">
+        <h1 class="fn">{% filter title %}{{ prosthetic.name|str_replace }}{% endfilter %}</h1>
+    {% if not prosthetic.get_class %}
+        <h4 class="warning">Implementation is missing or failed to compile.</h4>
+    {% endif %}
+    </hgroup>
+{% endblock page_title %}
+
+{% block page_header_content %}
+    <div class="description">{{ prosthetic.description|bleach_html }}</div>
+{% endblock page_header_content %}
+
+{% block page_body %}
+
+    <section>
+        <p><a class="big-button" href="{% url webapp.views.start_authorizing prosthetic.id %}">ADD TO YOUR WEAVR?</a></p>
+    </section>
+
+{% endblock page_body %}
+
+{% comment %}{% if show_associated and prosthetic.tokens %}
+    {% block page_footer %}
+    <h3>Associated Weavrs</h3>
+    <ul>
+        {% for token in prosthetic.tokens %}
+        <li>
+            <dl>
+                <dt>Blog</dt><dd><a href="{% url webapp.views.token token.oauth_key %}">{{ token.weavr_name }}</a></dd>
+                <dt>Status</dt><dd>{% if token.revoked %}<em class="warning">revoked{% else %}{% if token.enabled %}enabled{% else %}disabled{% endif %}{% endif %}</dd>
+                <dt>Last Active</dt><dd>{{ token.last_run|default:"never" }}{% if token.last_run %}resulted in <em>{{ token.last_result }}</em>{% endif %}</dd>
+            </dl>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endblock page_footer %}
+{% endif %}{% endcomment %}

@@ -1,0 +1,98 @@
+# Initialize App Engine and import the default settings (DB backend, etc.).
+# If you want to use a different backend you have to remove all occurences
+# of "djangoappengine" from this file.
+from djangoappengine.settings_base import *
+
+import os
+
+TEMPLATE_DEBUG = True
+
+SECRET_KEY = 'o448734958734958374598347593'
+
+INSTALLED_APPS = (
+    'django.contrib.admin',
+    'django.contrib.contenttypes',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'djangotoolbox',
+    # djangoappengine should come last, so it can override a few manage.py commands
+    'djangoappengine',
+    
+    # the runner framework
+    'webapp',
+    
+    # prosthetics
+    "emotional",
+    "dreamer",
+    "redirector",
+)
+
+MIDDLEWARE_CLASSES = (
+    #'google.appengine.ext.appstats.recording.AppStatsDjangoMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.core.context_processors.media',
+    'django.contrib.messages.context_processors.messages',
+)
+
+ADMIN_MEDIA_PREFIX = '/django-nonrel/django/contrib/admin/media/'
+
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
+
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates'),
+    os.path.join(os.path.dirname(__file__), 'django-nonrel.zip', "django/contrib/admin/templates"),
+)
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.filesystem.Loader',
+    'zip_loader.Loader',
+)
+
+ROOT_URLCONF = 'urls'
+
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/admin/'
+
+
+INSTANCE_NAME = os.environ.get("APPLICATION_ID", "localhost")
+try:
+  APPENGINE_DEV = os.environ['SERVER_SOFTWARE'].startswith('Dev')
+except:
+  APPENGINE_DEV = False
+
+if INSTANCE_NAME == 'weavrdreamr':
+    # this special-case doesn't need to be here, but I have it
+    # so that it's obvious what to change when we get a custom
+    # hostname on the app.
+    LOCAL_SERVER = 'www.weavrdreamr.com'
+
+elif APPENGINE_DEV:
+    LOCAL_SERVER = "localhost:8000"
+
+else:
+    LOCAL_SERVER = "%s.appspot.com" % INSTANCE_NAME
+
+
+
+# Activate django-dbindexer if available
+try:
+    import dbindexer
+    DATABASES['native'] = DATABASES['default']
+    DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
+    INSTALLED_APPS += ('dbindexer',)
+    DBINDEXER_SITECONF = 'dbindexes'
+    MIDDLEWARE_CLASSES = ('dbindexer.middleware.DBIndexerMiddleware',) + \
+                         MIDDLEWARE_CLASSES
+except ImportError:
+    pass

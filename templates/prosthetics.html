@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load bleach_html %}
+
+{% block title %}home{% endblock %}
+
+{% block content %}
+
+{% if prosthetics %}
+
+{% for prosthetic in prosthetics %}
+  <h1><em>{{ prosthetic }}</em> on <em>{{prosthetic.server}}</em></h1>
+  <p class="boring">implementation class {{ prosthetic.classname }}</p>
+  {% if not prosthetic.get_class %}
+  <p class="warning">implementation is missing or failed to compile</p>
+  {% endif %}
+  
+  <div class="description">
+  {{prosthetic.description|bleach_html}}
+  </div>
+
+  <p class="more"><a href="{% url webapp.views.prosthetic prosthetic.id %}">More details..</a>
+{% endfor %}
+
+
+{% else %}
+<p>no prosthetics</p>
+{% endif %}
+
+
+{% if missing %}
+<h2><em>missing</em> prosthetics</h2>
+<p>you have prosthetic classes on your system that are not configured:</p>
+{% for m in missing %}
+<h3><em>{{ m.name }}</em></h3>
+<p class="boring">{{m.classname}}</p>
+<div class="description">
+{% if m.doc %}<pre>{{ m.doc }}</pre>{% else %}<p>no documentation</p>{% endif %}
+</div>
+{% endfor %}
+
+<p>Add them to this server with <a href="{% url admin:webapp_prosthetic_add %}?classname={{ missing.0.classname }}">the admin interface</a>.</p>
+
+{% endif %}
+
+{% endblock %}
