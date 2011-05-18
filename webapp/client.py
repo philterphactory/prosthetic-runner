@@ -103,7 +103,7 @@ class OAuthWrangler(object):
 
 
 
-    def authorize_request_token_url(self, token, callback_url):
+    def authorize_request_token_url(self, token, callback_url=None):
         """Get the url to use to authorize the token"""
         oauth_request = oauth.OAuthRequest.from_token_and_callback(\
             token=token, http_url=self.authorization_url, callback=callback_url)
@@ -156,9 +156,12 @@ class OAuthWrangler(object):
         if resource_url[0] == "/":
             # absolute path on server
             resource_url = "http://%s/api%s"%(self.api_server, resource_url)
+        utf8dict = {}
+        for param in paramdict:
+            utf8dict[param.encode("utf8")] = paramdict[param].encode("utf8")
         oauth_request = oauth.OAuthRequest.from_consumer_and_token(\
             self.consumer, token=token, http_method='POST',
-            http_url=resource_url, parameters=paramdict)
+            http_url=resource_url, parameters=utf8dict)
         oauth_request.sign_request(self.signature_method_hmac_sha1, self.consumer, token)
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         self.connection.request(oauth_request.http_method, resource_url,
