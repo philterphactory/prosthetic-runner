@@ -174,6 +174,9 @@ def oauth_callback(request):
         return render_error("invalid request token")
         
     prosthetic = request_token.prosthetic
+    cls = prosthetic.get_class()
+    if not cls:
+        raise Exception("Can't get class for prosthtic")
       
     # verify the token and create a local object
     verified_token = oauth.OAuthToken(request_token.oauth_key, request_token.oauth_secret)
@@ -192,7 +195,7 @@ def oauth_callback(request):
     request_token.delete() # don't need this any more
     
     # if the ptk wants to do something at this point, it is able to.
-    ptk = prosthetic.get_class()(access_object)
+    ptk = cls(access_object)
     post_oauth_callback = ptk.post_oauth_callback()
     if post_oauth_callback:
         return post_oauth_callback
@@ -210,6 +213,10 @@ def cron(request):
     # queue run tasks for prosthetics that 'should_act'
     for token in AccessToken.objects.filter(enabled=True,revoked=False):
         prosthetic_class = prosthetics[ token.prosthetic_id ]
+        
+        if not prosthetic_class:
+            logging.info("not running token %s: can't load prosthetic class"%token.oauth_key)
+            continue
 
         if token.last_run:
             time_since_last_run = datetime.now() - token.last_run

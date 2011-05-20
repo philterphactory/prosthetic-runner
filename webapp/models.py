@@ -88,9 +88,6 @@ class AccessToken(models.Model):
     def __unicode__(self):
         return self.oauth_key
         
-    def get_absolute_url(self):
-        return "http://%s%s"%( settings.LOCAL_SERVER, reverse("webapp.views.token", args=[ self.oauth_key ]))
-    
     def get_json(self, url, params={}):
         token = oauth.OAuthToken(self.oauth_key, self.oauth_secret)
         try:

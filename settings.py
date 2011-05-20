@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     "emotional",
     "dreamer",
     "redirector",
+    "mmm",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -76,12 +77,15 @@ if INSTANCE_NAME == 'weavrdreamr':
     # so that it's obvious what to change when we get a custom
     # hostname on the app.
     LOCAL_SERVER = 'www.weavrdreamr.com'
+    DEBUG=False
 
 elif APPENGINE_DEV:
     LOCAL_SERVER = "localhost:8000"
+    DEBUG=True
 
 else:
     LOCAL_SERVER = "%s.appspot.com" % INSTANCE_NAME
+    DEBUG=True
 
 
 
