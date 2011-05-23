@@ -83,6 +83,28 @@ class AccessTokenAdmin(admin.ModelAdmin):
             
     ]
     readonly_fields = [ "oauth_key", "oauth_secret", "prosthetic", "weavr_url", "weavr_name", "pretty_historical_results", "last_success", "last_result" ]
+
+
+    def changelist_view(self, request, extra_context=None):
+
+        # don't apply changes if we're coming from an existing admin page, thus
+        # allowing us to select 'ALL'
+        if not request.META.get("QUERY_STRING", None):
+
+            if not request.GET.has_key('revoked__exact'):
+                q = request.GET.copy()
+                q['revoked__exact'] = '0'
+                request.GET = q
+                request.META['QUERY_STRING'] = request.GET.urlencode()
+
+            if not request.GET.has_key('enabled__exact'):
+                q = request.GET.copy()
+                q['enabled__exact'] = '1'
+                request.GET = q
+                request.META['QUERY_STRING'] = request.GET.urlencode()
+
+        return super(AccessTokenAdmin,self).changelist_view(request, extra_context=extra_context)
+
     
     
     def pretty_historical_results(self, obj):
