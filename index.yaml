@@ -34,6 +34,13 @@ indexes:
 
 - kind: webapp_accesstoken
   properties:
+  - name: enabled
+  - name: revoked
+  - name: __key__
+    direction: desc
+
+- kind: webapp_accesstoken
+  properties:
   - name: last_success
   - name: __key__
     direction: desc
