@@ -35,8 +35,11 @@ class ProstheticException(Exception):
     pass
     
 class Prosthetic(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(blank=True)
+    name = models.CharField(max_length=200,
+        help_text="Simple name for the prosthetic, used as the title of the join page")
+    description = models.TextField(blank=True,
+        help_text="Longer description. Use simple HTML (p, b, img, a tags) to tell the user what the prosthetic does")
+
     classname = models.CharField(max_length=200) # , choices=[[".","."]])
     server = models.CharField(max_length=200)
     consumer_key = models.CharField(max_length=200)
