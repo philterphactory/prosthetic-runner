@@ -6,7 +6,16 @@
 ## Running the prosthetic server locally
 
 * copy app.yaml.local.template to app.yaml.local and edit to include an application name. (can be anything for local development)
-* run "python manage.py createsuperuser" to create a local admin user
+* Create a super-user with the following commands in the python console:
+
+```python    
+    from django.contrib.auth.models import User
+    su = User.objects.create_user('admin', 'admin@localhost', 'admin') 
+    su.is_staff = True
+    su.is_superuser = True 
+    su.save()
+```
+
 * run "python manage.py runserver" to start the prosthetic server on http://localhost:8000/
 
 
@@ -18,11 +27,13 @@
 * (once deployed) run "python manage.py remote shell" to connect to the server remotely.
 * Create a super-user with the following commands in the python console:
     
+```python    
     from django.contrib.auth.models import User
     su = User.objects.create_user('admin', 'admin@localhost', 'admin') 
     su.is_staff = True
     su.is_superuser = True 
     su.save()
+```
 
 (you probably want to use a better username/password)
 
