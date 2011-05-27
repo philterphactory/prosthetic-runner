@@ -1,42 +1,27 @@
-#!/usr/bin/python2.4
-#
-# Copyright 2008 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#  http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-
-# CHANGED: show warning if profiler is enabled, so you don't mistakenly upload
-# with non-production settings. Also, added --nosyncdb switch.
-
-import sys
-import logging
-
+from ...boot import PROJECT_DIR
+from django.conf import settings
+from django.core.management import call_command
 from django.core.management.base import BaseCommand
+import logging
+import sys
+import time
+
+PRE_DEPLOY_COMMANDS = ()
+if 'mediagenerator' in settings.INSTALLED_APPS:
+    PRE_DEPLOY_COMMANDS += ('generatemedia',)
+PRE_DEPLOY_COMMANDS = getattr(settings, 'PRE_DEPLOY_COMMANDS',
+                              PRE_DEPLOY_COMMANDS)
 
 def run_appcfg(argv):
-    # import this so that we run through the checks at the beginning
-    # and report the appropriate errors
-    import appcfg
-
     # We don't really want to use that one though, it just executes this one
     from google.appengine.tools import appcfg
 
     # Reset the logging level to WARN as appcfg will spew tons of logs on INFO
     logging.getLogger().setLevel(logging.WARN)
-    
+
     new_args = argv[:]
     new_args[1] = 'update'
-    new_args.append('.')
+    new_args.append(PROJECT_DIR)
     syncdb = True
     if '--nosyncdb' in new_args:
         syncdb = False
@@ -44,13 +29,17 @@ def run_appcfg(argv):
     appcfg.main(new_args)
 
     if syncdb:
-        from django.core.management import call_command
-        from django.db import connection
-        connection.setup_remote()
         print 'Running syncdb.'
+        # Wait a little bit for deployment to finish
+        for countdown in range(9, 0, -1):
+            sys.stdout.write('%s\r' % countdown)
+            time.sleep(1)
+        from django.db import connections
+        for connection in connections.all():
+            if hasattr(connection, 'setup_remote'):
+                connection.setup_remote()
         call_command('syncdb', remote=True, interactive=True)
 
-    from django.conf import settings
     if getattr(settings, 'ENABLE_PROFILER', False):
         print '--------------------------\n' \
               'WARNING: PROFILER ENABLED!\n' \
@@ -65,4 +54,6 @@ class Command(BaseCommand):
     args = '[any appcfg.py options]'
 
     def run_from_argv(self, argv):
+        for command in PRE_DEPLOY_COMMANDS:
+            call_command(command)
         run_appcfg(argv)

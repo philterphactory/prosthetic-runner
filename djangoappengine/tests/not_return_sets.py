@@ -1,4 +1,4 @@
-from .testmodels import FieldsWithOptionsModel, OrderedModel
+from .testmodels import FieldsWithOptionsModel, OrderedModel, SelfReferenceModel
 import datetime
 from django.test import TestCase
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
@@ -66,6 +66,11 @@ class NonReturnSetsTest(TestCase):
             'itachi@uchia.com', 'rasengan@naruto.com', ]).delete()
         self.assertEquals(FieldsWithOptionsModel.objects.count(), 2)
 
+    def test_selfref_deletion(self):
+        entity = SelfReferenceModel()
+        entity.save()
+        entity.delete()
+
     def test_foreign_key_fetch(self):
         # test fetching the ForeignKey
         ordered_instance = OrderedModel.objects.get(priority=2)
@@ -88,3 +93,4 @@ class NonReturnSetsTest(TestCase):
         self.assertTrue(not entity.keys.exists())
         entity.keys = [new_foreign_key, new_foreign_key]
         self.assertEquals(entity.keys.count(), 1)
+        self.assertEquals(entity.keys.all()[0].integer, 3)
