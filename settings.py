@@ -76,7 +76,8 @@ if INSTANCE_NAME == 'weavrdreamr':
     # this special-case doesn't need to be here, but I have it
     # so that it's obvious what to change when we get a custom
     # hostname on the app.
-    LOCAL_SERVER = 'www.weavrdreamr.com'
+    LOCAL_SERVER = 'weavrdreamr.appspot.com'
+    #LOCAL_SERVER = 'www.weavrdreamr.com'
     DEBUG=False
 
 elif APPENGINE_DEV:
