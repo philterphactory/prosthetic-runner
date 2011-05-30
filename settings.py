@@ -26,7 +26,6 @@ INSTALLED_APPS = (
     "emotional",
     "dreamer",
     "redirector",
-    "mmm",
 )
 
 MIDDLEWARE_CLASSES = (
