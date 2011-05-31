@@ -2,14 +2,14 @@
 # If you want to use a different backend you have to remove all occurences
 # of "djangoappengine" from this file.
 from djangoappengine.settings_base import *
-
+import logging
 import os
 
 TEMPLATE_DEBUG = True
 
 SECRET_KEY = 'o448734958734958374598347593'
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.auth',
@@ -22,11 +22,8 @@ INSTALLED_APPS = (
     # the runner framework
     'webapp',
     
-    # prosthetics
-    "emotional",
-    "dreamer",
-    "redirector",
-)
+    # prosthetics are auto-added to this list
+]
 
 MIDDLEWARE_CLASSES = (
     #'google.appengine.ext.appstats.recording.AppStatsDjangoMiddleware',
@@ -100,3 +97,13 @@ try:
                          MIDDLEWARE_CLASSES
 except ImportError:
     pass
+
+# look for prosthetic folders
+root = os.path.dirname(__file__)
+for folder in os.listdir(root):
+    if os.path.isdir(os.path.join(root, folder)): # dereferences symlinks
+        if os.path.isfile(os.path.join(root, folder, "prosthetic.py")):
+            if not folder in INSTALLED_APPS:
+                logging.info("installing prosthetic %s"%folder);
+                INSTALLED_APPS.append(folder)
+
