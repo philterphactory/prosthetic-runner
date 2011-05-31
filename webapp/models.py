@@ -60,7 +60,11 @@ class Prosthetic(models.Model):
     def get_class(self):
         # do at run time to avoid import import loop
         from introspection import ptk_class_by_name
-        return ptk_class_by_name(self.classname)
+        cls = self.classname
+        if len(cls.split(".")) == 1:
+            # no dots in the classname. Try 'cls.prosthetic.Cls'
+            cls = "%s.prosthetic.%s"%(cls,cls.title())
+        return ptk_class_by_name(cls)
 
     def get_absolute_url(self):
         return "http://%s%s"%( settings.LOCAL_SERVER, reverse("webapp.views.prosthetic", args=[ self.id ]))
