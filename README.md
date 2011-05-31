@@ -10,7 +10,7 @@
 
 ```python    
     from django.contrib.auth.models import User
-    su = User.objects.create_user('admin', 'admin@localhost', 'admin') 
+    su = User.objects.create_user('admin', 'admin@localhost', 'password') 
     su.is_staff = True
     su.is_superuser = True 
     su.save()
@@ -29,7 +29,7 @@
     
 ```python    
     from django.contrib.auth.models import User
-    su = User.objects.create_user('admin', 'admin@localhost', 'admin') 
+    su = User.objects.create_user('admin', 'admin@localhost', 'password') 
     su.is_staff = True
     su.is_superuser = True 
     su.save()
@@ -44,10 +44,10 @@
 
 * Visit the admin site (/admin/) on your server. Log in. Click the "add" button next to 'prosthetics'.
 * Fill in the name and description of your prosthetic. Can be anything.
-* The classname needs to be the python classname of the implementation of your prosthetic. The bundled interesting prosthetic classes are "emotional.prosthetic.Emotional" or "dreamer.prosthetic.Dreamer".
+* The classname needs to be the python classname of the implementation of your prosthetic. The bundled interesting prosthetic classes are "emotional.prosthetic.Emotional" or "dreamer.prosthetic.Dreamer". If your classname is the same as the folder name, but capitalized, you can just use a single word ('emotional' or 'dreamer' in this case).
 * Server should be the hostname of the weavrs server you want your prosthetic to talk to. Probably www.weavrs.com.
 * Consumer key/secret are from the prosthetic page on the weavrs server. Visit http://www.weavrs.com/developer/ for details.
-* Check 'show on homepage' if this is the main prosthetic you want to run on this server.
+* Check 'show on homepage' if this is the main prosthetic you want to run on this server. A server can contain multiple prosthetics, but only one will be displayed on the homepage of the server.
 * Click "save"
 * Return to the root of your site to see the enabled prosthetic.
 
