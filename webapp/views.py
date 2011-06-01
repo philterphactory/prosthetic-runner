@@ -204,7 +204,14 @@ def oauth_callback(request):
     hide_usernav = True
     return render_to_response("success.html", locals(),
         context_instance=RequestContext(request))
-   
+  
+  
+ 
+def queue_token_run(token):
+    cls = token.prosthetic.classname
+    logging.info("Queueing run task for token %s for %s on %s"%( token.oauth_key, token.weavr_name, cls ))
+    task = Task(url='/runner/run_task/', method='POST', params={'token': token.oauth_key})
+    task.add('default')
    
 def cron(request):
     # preload prosthetics
@@ -224,10 +231,7 @@ def cron(request):
                 logging.info("not running %s on %s: only %d seconds since last run - need %d"%(prosthetic_class.__name__, token.weavr_name, time_since_last_run.seconds, prosthetic_class.time_between_runs()))
                 continue
 
-        prosthetic_instance = prosthetic_class(token)
-        logging.info("Queueing run task for token %s for %s on %s"%( token.oauth_key, token.weavr_name, prosthetic_class.__name__ ))
-        task = Task(url='/runner/run_task/', method='POST', params={'token': token.oauth_key})
-        task.add('default')
+        queue_token_run(token)
 
     return HttpResponse("queued all links")
    
