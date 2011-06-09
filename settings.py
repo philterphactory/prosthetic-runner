@@ -104,6 +104,6 @@ for folder in os.listdir(root):
     if os.path.isdir(os.path.join(root, folder)): # dereferences symlinks
         if os.path.isfile(os.path.join(root, folder, "prosthetic.py")):
             if not folder in INSTALLED_APPS:
-                logging.info("installing prosthetic %s"%folder);
+                #logging.info("installing prosthetic %s"%folder);
                 INSTALLED_APPS.append(folder)
 
