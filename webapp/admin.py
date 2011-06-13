@@ -108,13 +108,15 @@ class AccessTokenAdmin(admin.ModelAdmin):
     
     
     def pretty_historical_results(self, obj):
+        if not obj.historical_results:
+            return "No history"
         try:
             results = json.loads(obj.historical_results)
             def pretty_row(r):
                 return "<b>%s:</b> %s"%(datetime.datetime.utcfromtimestamp(r[0]).strftime("%Y-%m-%d %H:%M"), escape(r[1]))
             return "<br>".join(map(pretty_row, results))
         except Exception, e:
-            return "Error inflating results: %s"%e
+            return "Error inflating results: %s (tried to inflate '%s')"%(e, obj.historical_results)
     pretty_historical_results.short_description = "History"
     pretty_historical_results.allow_tags = True
     
