@@ -4,6 +4,7 @@
 from djangoappengine.settings_base import *
 import logging
 import os
+import re
 
 TEMPLATE_DEBUG = True
 
@@ -57,12 +58,10 @@ TEMPLATE_LOADERS = (
 
 ROOT_URLCONF = 'urls'
 
-LOGIN_URL = '/login/'
-LOGOUT_URL = '/logout/'
 LOGIN_REDIRECT_URL = '/admin/'
 
 
-INSTANCE_NAME = os.environ.get("APPLICATION_ID", "localhost")
+INSTANCE_NAME = re.sub(r'^s~','', os.environ.get("APPLICATION_ID", "localhost"))
 try:
   APPENGINE_DEV = os.environ['SERVER_SOFTWARE'].startswith('Dev')
 except:
