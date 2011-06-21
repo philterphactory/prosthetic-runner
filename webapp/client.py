@@ -158,7 +158,7 @@ class OAuthWrangler(object):
             resource_url = "http://%s/api%s"%(self.api_server, resource_url)
         utf8dict = {}
         for param in paramdict:
-            utf8dict[param.encode("utf8")] = paramdict[param].encode("utf8")
+            utf8dict[unicode(param.encode("utf8"))] = unicode(paramdict[param]).encode("utf8")
         oauth_request = oauth.OAuthRequest.from_consumer_and_token(\
             self.consumer, token=token, http_method='POST',
             http_url=resource_url, parameters=utf8dict)
