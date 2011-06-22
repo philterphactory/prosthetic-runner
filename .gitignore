@@ -5,3 +5,4 @@ media/static/version.txt
 *.pyc
 *~
 .DS_Store
+.gaedata
