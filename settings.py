@@ -60,7 +60,6 @@ ROOT_URLCONF = 'urls'
 
 LOGIN_REDIRECT_URL = '/admin/'
 
-
 INSTANCE_NAME = re.sub(r'^s~','', os.environ.get("APPLICATION_ID", "localhost"))
 try:
   APPENGINE_DEV = os.environ['SERVER_SOFTWARE'].startswith('Dev')
@@ -74,6 +73,10 @@ if INSTANCE_NAME == 'weavrdreamr':
     LOCAL_SERVER = 'www.weavrdreamr.com'
     DEBUG=False
 
+elif INSTANCE_NAME == 'weavrwhistlr' :
+    LOCAL_SERVER = 'www.weavrwhistlr.com'
+    DEBUG = False
+    
 elif APPENGINE_DEV:
     LOCAL_SERVER = "localhost:8000"
     DEBUG=True
