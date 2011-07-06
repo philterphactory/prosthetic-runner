@@ -56,6 +56,8 @@ raw_patterns = [
     (r'^runner/run_cron/$', "webapp.views.cron"),
     (r'^runner/run_task/$', "webapp.views.task"),
 
+    (r'^callback/$', "webapp.views.callback"),
+
 ]
 
 # this is for backwards-compatibility. Pity.

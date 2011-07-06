@@ -33,6 +33,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.decorators.csrf import csrf_exempt
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render_to_response, redirect
@@ -122,8 +123,10 @@ def call(request, token_id):
     return render_to_response("call.html", locals(),
                               context_instance=RequestContext(request))
 
-
-
+@csrf_exempt
+def callback(request):
+    logging.info("callback request incoming! (%r)"%request.POST)
+    return HttpResponse()
 
 # OAuth control
    
