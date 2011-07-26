@@ -9,4 +9,4 @@ cron:
 
 - description: ping central control panel
   url: /runner/ping_phloor/
-  schedule: every 60 minutes
+  schedule: every 20 minutes

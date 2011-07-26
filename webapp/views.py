@@ -298,9 +298,12 @@ def ping(request):
         url="http://%s"%settings.LOCAL_SERVER,
         deployed_at=data["shipped"],
         revision=data["revision"],
+        version=data["version"],
     )
-
-    urlfetch.fetch(server, deadline=1000, method="POST", payload=urlencode(payload))
+    try:
+        urlfetch.fetch(server, deadline=1000, method="POST", payload=urlencode(payload))
+    except Exception, e:
+        logging.warn("can't ping phloor: %s"%e)
 
     return HttpResponse()
     
