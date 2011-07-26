@@ -292,6 +292,28 @@ p + q {
 	display:block;
 }
 
+.text-center,
+.message,
+.description,
+hgroup {
+	text-align:center;
+}
+
+.text-left {
+	text-align:left;
+}
+
+p.text-center {
+	color:#777;
+	font-size:14px;
+	padding:10px;
+	border-top:1px solid #eee;
+	border-bottom:1px solid #eee;
+	width:auto !important;
+	max-width:auto !important;
+}
+
+
 /* > -- END TYPOGRAPHY --*/
 
 
@@ -678,6 +700,7 @@ input.error:focus {
 }
 button {
 	border:none;
+	text-transform:uppercase;
 }
 input:focus {
     color:#333;
@@ -695,7 +718,7 @@ body > footer {
 	overflow:hidden;
 }
 body > section {
-	padding:40px 0;
+	padding:30px 0;
 }
 #service-nav > ul,
 body > section > article,
@@ -709,9 +732,16 @@ header nav ul li {
     margin: 0 30px 0 0;
 }
 body > section > article > header {
-	text-align:center;
 	width:800px;
 	margin: 0 auto 20px;
+}
+body > section > article > header p {
+
+	margin:20px auto 0px;
+	clear:both;
+}
+p:first-child {
+	margin-top:0px;
 }
 #service-nav > ul li#user-nav {
 	float:right;
@@ -773,11 +803,7 @@ footer nav ul li {
     margin: 0;
     text-align:center;
 }
-.message,
-.description,
-hgroup {
-	text-align:center;
-}
+
 .description {
 	margin:0 0 20px 0;
 }
@@ -815,4 +841,10 @@ ul#legals {
 	text-shadow:none;
 }
 
-
+a[href*="soundcloud.com/oauth"] {
+	display:block;
+	float:left;
+	padding:5px 20px 30px 0;
+	border-right:1px solid #ddd;
+	margin-right:20px;
+}
