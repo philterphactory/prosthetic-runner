@@ -21,6 +21,86 @@ indexes:
   - name: app_label
   - name: name
 
+- kind: mmm_chapter
+  properties:
+  - name: monomyth
+  - name: order
+
+- kind: mmm_chapter
+  properties:
+  - name: monomyth_id
+  - name: monomyth
+
+- kind: mmm_chapter
+  properties:
+  - name: monomyth_id
+  - name: monomyth
+  - name: order
+
+- kind: mmm_chapter
+  properties:
+  - name: monomyth_id
+  - name: order
+
+- kind: mmm_genny
+  properties:
+  - name: monomyth_id
+  - name: name
+
+- kind: mmm_monomyth
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: mmm_monomythconfig
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: mmm_renderedchapter
+  properties:
+  - name: story_id
+  - name: order
+
+- kind: mmm_search
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: mmm_search
+  properties:
+  - name: monomyth_id
+  - name: name
+
+- kind: mmm_search
+  properties:
+  - name: monomyth_id
+  - name: remote_service
+  - name: name
+
+- kind: mmm_search
+  properties:
+  - name: monomyth_id
+  - name: required
+  - name: name
+
+- kind: mmm_search
+  properties:
+  - name: remote_service
+  - name: name
+
+- kind: mmm_story
+  properties:
+  - name: monomyth_id
+  - name: created
+    direction: desc
+
+- kind: mmm_story
+  properties:
+  - name: token_id
+  - name: created
+    direction: desc
+
 - kind: webapp_accesstoken
   properties:
   - name: __key__
@@ -66,3 +146,13 @@ indexes:
   properties:
   - name: __key__
     direction: desc
+
+- kind: whistling_whistlerconfig
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: whistling_whistlerun
+  properties:
+  - name: success
+  - name: created

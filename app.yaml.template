@@ -12,6 +12,9 @@ handlers:
 - url: /media
   static_dir: media
 
+- url: /whistling/static
+  static_dir: whistling/static
+
 - url: /favicon.ico
   static_files: media/images/favicon.ico
   upload: media/images/favicon.ico
