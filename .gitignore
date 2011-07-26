@@ -6,3 +6,4 @@ media/static/version.txt
 *~
 .DS_Store
 .gaedata
+webapp/deploy_data.py

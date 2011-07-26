@@ -55,6 +55,7 @@ raw_patterns = [
 
     (r'^runner/run_cron/$', "webapp.views.cron"),
     (r'^runner/run_task/$', "webapp.views.task"),
+    (r'^runner/ping_phloor/$', 'webapp.views.ping'),
 
     (r'^callback/$', "webapp.views.callback"),
 

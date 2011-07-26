@@ -38,6 +38,7 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template import RequestContext
+from django.utils.http import urlquote_plus, urlencode
    
 from google.appengine.api import urlfetch
    
@@ -274,3 +275,32 @@ def task(request):
     token.save()
   
     return HttpResponse(token.last_result, content_type = "text/plain")
+
+
+def ping(request):
+    server = "http://phloor.weavrs.com/ping/"
+    if settings.APPENGINE_DEV:
+        logging.info("pinging local dev environment")
+        server = "http://localhost:8002/ping/"
+
+    instance_name = os.environ.get("APPLICATION_ID", "localhost")
+    
+    try:
+        from deploy_data import data
+    except ImportError:
+        data = dict(revision="",shipped="")
+    
+    logging.info("ship data is %s"%repr(data))
+
+    payload=dict(
+        name=instance_name,
+        type="prosthetic-runner",
+        url="http://%s"%settings.LOCAL_SERVER,
+        deployed_at=data["shipped"],
+        revision=data["revision"],
+    )
+
+    urlfetch.fetch(server, deadline=1000, method="POST", payload=urlencode(payload))
+
+    return HttpResponse()
+    

@@ -6,3 +6,7 @@ cron:
 - description: queue a task for each subject
   url: /runner/run_cron/
   schedule: every 10 minutes
+
+- description: ping central control panel
+  url: /runner/ping_phloor/
+  schedule: every 60 minutes

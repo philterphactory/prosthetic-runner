@@ -90,12 +90,22 @@ try:
     import subprocess
     pipe = os.popen("git log -n 1")
     version = pipe.readline().split()[1]
+    pipe.close()
+
     vfile = open(os.path.join(os.path.dirname(__file__), "media/static/version.txt"), "w")
     vfile.write(version)
     vfile.write(" shipped ")
     vfile.write(str(datetime.datetime.now()))
     vfile.close()
-    pipe.close()
+
+    vfile = open(os.path.join(os.path.dirname(__file__), "webapp/deploy_data.py"), "w")
+    vfile.write("# this file auto-generated\n")
+    vfile.write("data = %s"%repr(dict(
+        revision = version,
+        shipped = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+    )))
+    vfile.close()
+
 except Exception, e:
     print "Can't write version file: %s"%e
 
