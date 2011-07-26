@@ -89,11 +89,11 @@ os.rename(temp_file, app_file)
 try:
     import subprocess
     pipe = os.popen("git log -n 1")
-    version = pipe.readline().split()[1]
+    revision = pipe.readline().split()[1]
     pipe.close()
 
     vfile = open(os.path.join(os.path.dirname(__file__), "media/static/version.txt"), "w")
-    vfile.write(version)
+    vfile.write(revision)
     vfile.write(" shipped ")
     vfile.write(str(datetime.datetime.now()))
     vfile.close()
@@ -101,8 +101,10 @@ try:
     vfile = open(os.path.join(os.path.dirname(__file__), "webapp/deploy_data.py"), "w")
     vfile.write("# this file auto-generated\n")
     vfile.write("data = %s"%repr(dict(
-        revision = version,
+        revision = revision,
         shipped = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S"),
+        version = version,
+        application = application,
     )))
     vfile.close()
 

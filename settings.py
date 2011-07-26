@@ -73,7 +73,11 @@ if INSTANCE_NAME == 'weavrdreamr':
     LOCAL_SERVER = 'www.weavrdreamr.com'
     DEBUG=False
 
-elif INSTANCE_NAME == 'weavrwhistlr' :
+elif INSTANCE_NAME == 'weavrwhistlr':
+    LOCAL_SERVER = 'www.weavrwhistlr.com'
+    DEBUG = False
+    
+elif INSTANCE_NAME == 'whistlingweavrs':
     LOCAL_SERVER = 'www.weavrwhistlr.com'
     DEBUG = False
     
