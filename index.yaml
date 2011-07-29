@@ -10,6 +10,16 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: alice_aimlconfig
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: alice_questionrun
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: django_admin_log
   properties:
   - name: user_id
@@ -101,6 +111,26 @@ indexes:
   - name: created
     direction: desc
 
+- kind: sloganeer_posterrun
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: sloganeer_posterwords
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: sloganeer_slideshare
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: sloganeer_sloganeerconfig
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: webapp_accesstoken
   properties:
   - name: __key__
@@ -143,6 +173,11 @@ indexes:
     direction: desc
 
 - kind: webapp_requesttoken
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: whistling_soundcloud
   properties:
   - name: __key__
     direction: desc
