@@ -221,3 +221,13 @@ indexes:
   properties:
   - name: success
   - name: created
+
+- kind: slideshare_slideshareconfig
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: guardian_guardiannewsconfig
+  properties:
+  - name: __key__
+    direction: desc
