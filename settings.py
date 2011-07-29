@@ -79,6 +79,9 @@ elif INSTANCE_NAME == 'weavrdreamr':
 elif INSTANCE_NAME == 'whistlingweavrs':
     LOCAL_SERVER = 'www.weavrwhistlr.com'
 
+elif INSTANCE_NAME == 'prosthetic-dev':
+    DEBUG=True
+
 
 
 
