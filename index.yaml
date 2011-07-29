@@ -10,6 +10,16 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: agency_agencyconfig
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: agency_slideshare
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: alice_aimlconfig
   properties:
   - name: __key__
@@ -116,6 +126,11 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: sloganeer_posterrun
+  properties:
+  - name: success
+  - name: created
+
 - kind: sloganeer_posterwords
   properties:
   - name: __key__
@@ -191,3 +206,9 @@ indexes:
   properties:
   - name: success
   - name: created
+
+- kind: recipeer_config
+  properties:
+  - name: __key__
+    direction: desc
+

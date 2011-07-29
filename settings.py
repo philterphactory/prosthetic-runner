@@ -66,28 +66,19 @@ try:
 except:
   APPENGINE_DEV = False
 
-if INSTANCE_NAME == 'weavrdreamr':
-    # this special-case doesn't need to be here, but I have it
-    # so that it's obvious what to change when we get a custom
-    # hostname on the app.
-    LOCAL_SERVER = 'www.weavrdreamr.com'
-    DEBUG=False
+DEBUG = False
+LOCAL_SERVER = "%s.appspot.com" % INSTANCE_NAME
 
-elif INSTANCE_NAME == 'weavrwhistlr':
-    LOCAL_SERVER = 'www.weavrwhistlr.com'
-    DEBUG = False
-    
+if APPENGINE_DEV:
+    LOCAL_SERVER = "localhost:8001"
+    DEBUG=True
+
+elif INSTANCE_NAME == 'weavrdreamr':
+    LOCAL_SERVER = 'www.weavrdreamr.com'
+
 elif INSTANCE_NAME == 'whistlingweavrs':
     LOCAL_SERVER = 'www.weavrwhistlr.com'
-    DEBUG = False
-    
-elif APPENGINE_DEV:
-    LOCAL_SERVER = "localhost:8000"
-    DEBUG=True
 
-else:
-    LOCAL_SERVER = "%s.appspot.com" % INSTANCE_NAME
-    DEBUG=True
 
 
 
