@@ -212,3 +212,12 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: alice_questionrun
+  properties:
+  - name: success
+  - name: created
+
+- kind: agency_deckrun
+  properties:
+  - name: success
+  - name: created
