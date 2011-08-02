@@ -40,6 +40,11 @@ indexes:
   - name: success
   - name: created
 
+- kind: clique_weavrcliquegroupmembership
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: django_admin_log
   properties:
   - name: user_id
@@ -50,6 +55,11 @@ indexes:
   properties:
   - name: app_label
   - name: name
+
+- kind: greeter_weavrgreetergroupmembership
+  properties:
+  - name: __key__
+    direction: desc
 
 - kind: guardian_guardiannewsconfig
   properties:
