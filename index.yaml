@@ -15,6 +15,11 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: agency_deckrun
+  properties:
+  - name: success
+  - name: created
+
 - kind: agency_slideshare
   properties:
   - name: __key__
@@ -30,6 +35,11 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: alice_questionrun
+  properties:
+  - name: success
+  - name: created
+
 - kind: django_admin_log
   properties:
   - name: user_id
@@ -40,6 +50,11 @@ indexes:
   properties:
   - name: app_label
   - name: name
+
+- kind: guardian_guardiannewsconfig
+  properties:
+  - name: __key__
+    direction: desc
 
 - kind: mmm_chapter
   properties:
@@ -119,6 +134,16 @@ indexes:
   properties:
   - name: token_id
   - name: created
+    direction: desc
+
+- kind: recipeer_config
+  properties:
+  - name: __key__
+    direction: desc
+
+- kind: slideshare_slideshareconfig
+  properties:
+  - name: __key__
     direction: desc
 
 - kind: sloganeer_posterrun
@@ -206,28 +231,3 @@ indexes:
   properties:
   - name: success
   - name: created
-
-- kind: recipeer_config
-  properties:
-  - name: __key__
-    direction: desc
-
-- kind: alice_questionrun
-  properties:
-  - name: success
-  - name: created
-
-- kind: agency_deckrun
-  properties:
-  - name: success
-  - name: created
-
-- kind: slideshare_slideshareconfig
-  properties:
-  - name: __key__
-    direction: desc
-
-- kind: guardian_guardiannewsconfig
-  properties:
-  - name: __key__
-    direction: desc

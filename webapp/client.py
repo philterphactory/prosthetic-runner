@@ -23,12 +23,12 @@
 # Phactory Ltd..
 #
 
-import httplib
 import logging
 import oauth.oauth as oauth
 import re
 import urlparse
 import cgi
+from google.appengine.api import urlfetch
 
 # python 2.6
 try: import simplejson as json
@@ -58,16 +58,13 @@ class OAuthWrangler(object):
         self.access_token_url = oauth_server_path + '/access_token/'
         self.authorization_url = oauth_server_path + '/authorize/'
 
-        self.connection = httplib.HTTPConnection(api_server)
-        self.connection.set_debuglevel(debug)
         self.consumer = oauth.OAuthConsumer(consumer_key, consumer_secret)
         self.signature_method_plaintext = oauth.OAuthSignatureMethod_PLAINTEXT()
         self.signature_method_hmac_sha1 = oauth.OAuthSignatureMethod_HMAC_SHA1()
     
-    def check_response(self, connection):
-        response = connection.getresponse()
-        body = response.read()
-        logging.info("response status is %s"%response.status)
+    def check_response(self, response):
+        body = response.content
+        logging.info("response status is %s"%response.status_code)
 
         if re.search(r'Invalid access token', body) and re.search(r"Status: 401", body):
             # annoying server bug is returning bad error responses
@@ -77,11 +74,11 @@ class OAuthWrangler(object):
             # annoying server bug is returning bad error responses
             raise OAuthForbiddenException()
 
-        if response.status >= 200 and response.status < 300:
+        if int(response.status_code) >= 200 and int(response.status_code) < 300:
             return body
-        if response.status == 401:
-            raise OAuthUnauthorizedException()
-        if response.status == 403:
+        if int(response.status_code) == 401:
+            raise OAuthUnauthorizedException(body)
+        if int(response.status_code) == 403:
             raise OAuthForbiddenException()
 
         logging.error("unexpected server response %d: %s"%(response.status,body))
@@ -89,13 +86,17 @@ class OAuthWrangler(object):
 
     def get_request_token(self):
         """Get the initial request token we can exchange for an access token"""
-        oauth_request = oauth.OAuthRequest.from_consumer_and_token(\
-            self.consumer, http_url=self.request_token_url)
+        oauth_request = oauth.OAuthRequest.from_consumer_and_token(self.consumer, http_url=self.request_token_url)
         oauth_request.sign_request(self.signature_method_plaintext, self.consumer, None)
-        self.connection.request(oauth_request.http_method, self.request_token_url,
-                                headers=oauth_request.to_header())
-        
-        body = self.check_response(self.connection)
+
+        response = urlfetch.fetch(
+            deadline=100,
+            url=self.request_token_url,
+            method=oauth_request.http_method,
+            headers=oauth_request.to_header(),
+        )
+        body = self.check_response(response)
+
         # Because why should read return just the body?
         if '\n\n' in body:
             body = body.split('\n\n')[1]
@@ -105,20 +106,24 @@ class OAuthWrangler(object):
 
     def authorize_request_token_url(self, token, callback_url=None):
         """Get the url to use to authorize the token"""
-        oauth_request = oauth.OAuthRequest.from_token_and_callback(\
-            token=token, http_url=self.authorization_url, callback=callback_url)
+        oauth_request = oauth.OAuthRequest.from_token_and_callback(token=token, http_url=self.authorization_url, callback=callback_url)
         return oauth_request.to_url()
 
     def get_access_token(self, token, verifier):
         """Exchange the request token for an access token"""
-        oauth_request = oauth.OAuthRequest.from_consumer_and_token(\
-            self.consumer, token=token, verifier=verifier, 
-            http_url=self.access_token_url)
+        oauth_request = oauth.OAuthRequest.from_consumer_and_token(self.consumer,
+            token=token, verifier=verifier, http_url=self.access_token_url)
         oauth_request.sign_request(self.signature_method_plaintext, self.consumer, token)
-        self.connection.request(oauth_request.http_method, self.access_token_url,
-                                headers=oauth_request.to_header())
 
-        return oauth.OAuthToken.from_string(self.check_response(self.connection))
+        response = urlfetch.fetch(
+            deadline=100,
+            url=self.access_token_url,
+            method=oauth_request.http_method,
+            headers=oauth_request.to_header(),
+        )
+        body = self.check_response(response)
+        return oauth.OAuthToken.from_string(body)
+
 
     def get_resource(self, token, resource_url, paramdict = {}):
         """GET an OAuth resource"""
@@ -134,12 +139,18 @@ class OAuthWrangler(object):
                 paramdict[k] = query[k][0]
         logging.info("params are %r (added %r)"%(paramdict, query))
         
-        oauth_request = oauth.OAuthRequest.from_consumer_and_token(\
+        oauth_request = oauth.OAuthRequest.from_consumer_and_token(
             self.consumer, token=token, http_method='GET',
             http_url=resource_url, parameters=paramdict)
         oauth_request.sign_request(self.signature_method_hmac_sha1, self.consumer, token)
-        self.connection.request(oauth_request.http_method, oauth_request.to_url())
-        return self.check_response(self.connection)
+
+        response = urlfetch.fetch(
+            deadline=100,
+            url=resource_url,
+            method=oauth_request.http_method,
+            headers=oauth_request.to_header(),
+        )
+        return self.check_response(response)
     
     # convenience wrapper, parses response as JSON.
     def get_json(self, token, resource_url, paramdict = {}):
@@ -164,10 +175,15 @@ class OAuthWrangler(object):
             http_url=resource_url, parameters=utf8dict)
         oauth_request.sign_request(self.signature_method_hmac_sha1, self.consumer, token)
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-        self.connection.request(oauth_request.http_method, resource_url,
-                                body=oauth_request.to_postdata(),
-                                headers=headers)
-        return self.check_response(self.connection)
+
+        response = urlfetch.fetch(
+            deadline=100,
+            url=resource_url,
+            method=oauth_request.http_method,
+            headers=headers,
+            payload=oauth_request.to_postdata()
+        )
+        return self.check_response(response)
 
     # convenience wrapper, parses response as JSON.
     def post_json(self, token, resource_url, paramdict):
