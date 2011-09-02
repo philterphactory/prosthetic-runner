@@ -247,3 +247,9 @@ indexes:
   properties:
   - name: success
   - name: created
+
+- kind: whistling_whistlerun
+  properties:
+  - name: success
+  - name: created
+    direction: desc
