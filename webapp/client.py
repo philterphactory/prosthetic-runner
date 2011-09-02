@@ -68,11 +68,15 @@ class OAuthWrangler(object):
 
         if re.search(r'Invalid access token', body) and re.search(r"Status: 401", body):
             # annoying server bug is returning bad error responses
-            raise OAuthUnauthorizedException()
+            raise OAuthUnauthorizedException("Invalid access token")
 
         if re.search(r'Invalid access token', body) and re.search(r"Status: 403", body):
             # annoying server bug is returning bad error responses
-            raise OAuthForbiddenException()
+            raise OAuthForbiddenException("Invalid access token")
+
+        if re.search(r'Invalid signature. Expected signature base string', body) and re.search(r"Status: 401", body):
+            # annoying server bug is returning bad error responses
+            raise OAuthForbiddenException("Invalid signature")
 
         if int(response.status_code) >= 200 and int(response.status_code) < 300:
             return body
