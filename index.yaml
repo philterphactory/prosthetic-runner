@@ -115,6 +115,12 @@ indexes:
 - kind: mmm_search
   properties:
   - name: monomyth_id
+  - name: __key__
+    direction: desc
+
+- kind: mmm_search
+  properties:
+  - name: monomyth_id
   - name: name
 
 - kind: mmm_search
