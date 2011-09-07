@@ -59,6 +59,7 @@ class ProstheticForm(ModelForm):
 
 class ProstheticAdmin(admin.ModelAdmin):
     list_display = ( "name", "server", "classname", "show_on_homepage" )
+    readonly_fields = ( "created", "blog_keyword", )
     form = ProstheticForm
 
 

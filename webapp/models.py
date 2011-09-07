@@ -41,11 +41,17 @@ class Prosthetic(models.Model):
         help_text="Longer description. Use simple HTML (p, b, img, a tags) to tell the user what the prosthetic does")
 
     classname = models.CharField(max_length=200) # , choices=[[".","."]])
-    server = models.CharField(max_length=200)
-    consumer_key = models.CharField(max_length=200)
-    consumer_secret = models.CharField(max_length=200)
+    server = models.CharField(max_length=200,
+        help_text="Address of the weavrs server this prosthetic connects to.", default="www.weavrs.com")
+    consumer_key = models.CharField(max_length=200,
+        help_text="Consumer key for this prosthetic - from /developer on the weavrs server")
+    consumer_secret = models.CharField(max_length=200,
+        help_text="Consumer secret for this prosthetic - from /developer on the weavrs server")
+
     created = models.DateTimeField(auto_now_add=True)
-    show_on_homepage = models.BooleanField(default=False)
+    show_on_homepage = models.BooleanField(default=False,
+        help_text="Show this prosthetic as the default one to show when visiting the root of the PTK server. Turn on for exactly one PTK.")
+
     blog_keyword = models.CharField(max_length=200, null=True,blank=True)
 
     def __unicode__(self):
