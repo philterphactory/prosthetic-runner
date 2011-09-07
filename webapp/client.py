@@ -85,7 +85,7 @@ class OAuthWrangler(object):
         if int(response.status_code) == 403:
             raise OAuthForbiddenException()
 
-        logging.error("unexpected server response %d: %s"%(response.status,body))
+        logging.error("unexpected server response %d: %s"%(response.status_code,body))
         raise OAuthServerException(body)
 
     def get_request_token(self):
