@@ -38,6 +38,8 @@ handler500 = 'djangotoolbox.errorviews.server_error'
 
 raw_patterns = [
 
+    (r'^accounts/', include('gaeauth.urls')),
+
     (r'^admin/accesstoken_action/(\d+)/$', 'webapp.admin.admin_action'),
     (r'^admin/accesstoken_blog/(\d+)/$', 'webapp.admin.view_blog'),
     (r'^admin/', include(admin.site.urls)),

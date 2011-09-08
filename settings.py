@@ -56,8 +56,10 @@ TEMPLATE_LOADERS = (
     'zip_loader.Loader',
 )
 
+
 ROOT_URLCONF = 'urls'
 
+AUTHENTICATION_BACKENDS = ('webapp.auth.HackyGoogleAccountBackend',)
 LOGIN_REDIRECT_URL = '/admin/'
 
 INSTANCE_NAME = re.sub(r'^s~','', os.environ.get("APPLICATION_ID", "localhost"))
@@ -76,12 +78,14 @@ if APPENGINE_DEV:
 elif INSTANCE_NAME == 'weavrdreamr':
     LOCAL_SERVER = 'www.weavrdreamr.com'
 
+elif INSTANCE_NAME == 'recipeer-live':
+    LOCAL_SERVER = 'recipeer.ptk.weavrs.com'
+
 elif INSTANCE_NAME == 'whistlingweavrs':
     LOCAL_SERVER = 'www.weavrwhistlr.com'
 
 elif INSTANCE_NAME == 'prosthetic-dev':
     DEBUG=True
-
 
 
 
