@@ -81,6 +81,9 @@ elif INSTANCE_NAME == 'weavrdreamr':
 elif INSTANCE_NAME == 'recipeer-live':
     LOCAL_SERVER = 'recipeer.ptk.weavrs.com'
 
+elif INSTANCE_NAME == 'sloganeer-live':
+    LOCAL_SERVER = 'sloganeer.ptk.weavrs.com'
+
 elif INSTANCE_NAME == 'whistlingweavrs':
     LOCAL_SERVER = 'www.weavrwhistlr.com'
 
