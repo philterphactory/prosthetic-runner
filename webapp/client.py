@@ -27,6 +27,7 @@ import logging
 import oauth.oauth as oauth
 import re
 import urlparse
+import urllib
 import cgi
 from google.appengine.api import urlfetch
 
@@ -76,6 +77,7 @@ class OAuthWrangler(object):
 
         if re.search(r'Invalid signature. Expected signature base string', body) and re.search(r"Status: 401", body):
             # annoying server bug is returning bad error responses
+            logging.info("got server response\n%s"%body)
             raise OAuthForbiddenException("Invalid signature")
 
         if int(response.status_code) >= 200 and int(response.status_code) < 300:
@@ -141,18 +143,21 @@ class OAuthWrangler(object):
         for k in query:
             if not k in paramdict:
                 paramdict[k] = query[k][0]
-        logging.info("params are %r (added %r)"%(paramdict, query))
         
+        for k in paramdict.keys():
+            paramdict[k] = unicode(paramdict[k])
+            
+        logging.info("params are %r (added %r)"%(paramdict, query))
+
         oauth_request = oauth.OAuthRequest.from_consumer_and_token(
             self.consumer, token=token, http_method='GET',
             http_url=resource_url, parameters=paramdict)
         oauth_request.sign_request(self.signature_method_hmac_sha1, self.consumer, token)
-
+        
         response = urlfetch.fetch(
             deadline=100,
-            url=resource_url,
             method=oauth_request.http_method,
-            headers=oauth_request.to_header(),
+            url=oauth_request.to_url(),
         )
         return self.check_response(response)
     
