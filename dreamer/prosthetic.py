@@ -117,6 +117,9 @@ class Dreamer(Prosthetic):
         if not "posts" in self.state:
             self.state["posts"] = []
         self.state["posts"].append( post["post_id"] )
+        
+        if len(self.state["posts"]) > 30:
+            self.state["posts"][-20:]
 
         return "posted about %s: %s"%( and_string, repr(post) )
 

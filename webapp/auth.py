@@ -9,7 +9,9 @@ class HackyGoogleAccountBackend(GoogleAccountBackend):
 
     def authenticate(self, **credentials):
         user = super(HackyGoogleAccountBackend,self).authenticate(**credentials)
-        
+        if not user:
+            return None
+
         # if a user was created as an admin but is no longer an admin, fix. Also, the
         # other way round.
         current = users.is_current_user_admin()
