@@ -87,6 +87,9 @@ elif INSTANCE_NAME == 'sloganeer-live':
 elif INSTANCE_NAME == 'whistlingweavrs':
     LOCAL_SERVER = 'www.weavrwhistlr.com'
 
+elif INSTANCE_NAME == 'emotional-live':
+    LOCAL_SERVER = 'www.wovenemotion.com'
+
 elif INSTANCE_NAME == 'prosthetic-dev':
     DEBUG=True
 
