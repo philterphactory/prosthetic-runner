@@ -116,3 +116,5 @@ for folder in os.listdir(root):
                 #logging.info("installing prosthetic %s"%folder);
                 INSTALLED_APPS.append(folder)
 
+# customize session so not to clash with other django instances
+SESSION_COOKIE_NAME = 'ptksession'
