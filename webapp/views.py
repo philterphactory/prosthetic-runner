@@ -231,8 +231,9 @@ def cron(request):
 
         if token.last_run:
             time_since_last_run = datetime.now() - token.last_run
-            if time_since_last_run.seconds < prosthetic_class.time_between_runs():
-                logging.info("not running %s on %s: only %d seconds since last run - need %d"%(prosthetic_class.__name__, token.weavr_name, time_since_last_run.seconds, prosthetic_class.time_between_runs()))
+            time_since_last_run_seconds = 86400 * time_since_last_run.days + time_since_last_run.seconds
+            if time_since_last_run_seconds < prosthetic_class.time_between_runs():
+                logging.info("not running %s on %s: only %d seconds since last run - need %d"%(prosthetic_class.__name__, token.weavr_name, time_since_last_run_seconds, prosthetic_class.time_between_runs()))
                 continue
 
         queue_token_run(token)
