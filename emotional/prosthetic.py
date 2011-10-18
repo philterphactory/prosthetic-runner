@@ -32,6 +32,10 @@ class Emotional(Prosthetic):
 
     def act(self, force=False):
         state = self.get("/1/weavr/state/")
+        if not state["awake"] and not force:
+            logging.info("weavr is sleeping. not emotional.")
+            return "weavr is asleep - refusing to be emotional"
+
         emotion = state["emotion"]
         
         # store previous emotion in token data object.

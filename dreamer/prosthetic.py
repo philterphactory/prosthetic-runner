@@ -42,8 +42,8 @@ class Dreamer(Prosthetic):
     # run throttle
     @classmethod
     def time_between_runs(cls):
-        # run every hour. Dreams don't happen every hour, though.
-        return 3600
+        # run every two hours. Dreams don't happen every two hours, though.
+        return 3600 * 2
 
     # called from the task queue, once an hour (or whatever)
     @persist_state

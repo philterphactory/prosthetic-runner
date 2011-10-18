@@ -58,8 +58,8 @@ class Prosthetic(object):
     # run throttle
     @classmethod
     def time_between_runs(cls):
-        # default to two hours
-        return 3600 * 2
+        # default to four hours
+        return 3600 * 4
         
 
 
