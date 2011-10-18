@@ -7,3 +7,17 @@ media/static/version.txt
 .DS_Store
 .gaedata
 webapp/deploy_data.py
+
+agency
+clique
+flickrapi
+greeter
+guardian
+mmm
+qwiki
+recipeer
+rsa
+scapi
+slideshare
+sloganeer
+whistling
