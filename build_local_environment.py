@@ -64,8 +64,8 @@ application = local_overrides["application"]
 version = local_overrides["version"]
 
 # allow environment override
-version = os.getenv("VERSION", version)
-application = os.getenv("APPLICATION", application)
+version = os.getenv("PTK_VERSION", os.getenv("VERSION", version))
+application = os.getenv("PTK_APPLICATION", os.getenv("APPLICATION", application))
 
 print "=== building local environment: %s version %s"%(application, version)
 
