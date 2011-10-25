@@ -20,10 +20,56 @@ def admin_required(function=None):
         return actual_decorator(function)
     return actual_decorator
 
+class HttpError(Exception):
+    def __init__(self, response):
+        self.response = response
+
+def handle_error(function=None):
+    def decorator(f):
+        def _wrapped_view(*args, **kwargs):
+            try:
+                return f(*args, **kwargs)
+            except HttpError, e:
+                return e.response
+        return _wrapped_view
+    if function:
+        return decorator(function)
+    else:
+        return decorator
+
+def getintparam(request, name, default, minimum=None, maximum=None, fmt="json"):
+    value = request.GET.get(name, default)
+    try:
+        value = int(value)
+        value = max(minimum, min(maximum, value))
+        return value
+    except ValueError:
+        status_code = 400
+        ctx = {
+            "status_code" : status_code,
+            "message" : "Invalid %s: %s" % (name, value)
+        }
+        mimetype = fmt == "json" and "application/json" or "text/html"
+        if fmt == "html":
+            response = render(request, 'errormon/error.html',
+                    ctx, context_instance=RequestContext(request))
+            response.status_code = status_code
+        else:
+            response = HttpResponse(simplejson.dumps(ctx), mimetype=mimetype)
+            response["Access-Control-Allow-Origin"] = "*"
+        raise HttpError(response)
+
+def getparam(request, name, default, options=None):
+    value = request.GET.get(name, default)
+    if options and not value in options:
+        value = default
+    return value
+
 @admin_required()
+@handle_error
 def home(request):
     """Show list of recent errors."""
-    num_errors = 20
+    num_errors = getintparam(request, "window", 20, minimum=1, maximum=100, fmt="html")
     recent_errors = list(ExceptionModel.objects.all().order_by("-occurred_at")[:num_errors])
     ctx = {
         "num_errors" : num_errors,
@@ -33,12 +79,12 @@ def home(request):
             ctx, context_instance=RequestContext(request))
 
 @admin_required()
+@handle_error
 def status(request):
     """Return 500 if errors occurred in last few minutes, 200 otherwise."""
-    num_mins = request.GET.get("window", 5)
-    fmt = request.GET.get("fmt", "html")
-    if not fmt in ["json", "html"]:
-        fmt = "html"
+    fmt = getparam(request, "fmt", "html", options=["html", "json"])
+    num_mins = getintparam(request, "window", 5, minimum=1, maximum=1000000, fmt=fmt)
+
     mins_ago = datetime.datetime.now() - datetime.timedelta(minutes=num_mins)
     recent_errors = list(ExceptionModel.objects.filter(occurred_at__gte=mins_ago).order_by("-occurred_at"))
     has_errors = len(recent_errors) > 0
@@ -60,12 +106,12 @@ def status(request):
         response["Access-Control-Allow-Origin"] = "*"
     return response
 
+@handle_error
 def status_summary(request):
     """Return number of recent errors as json."""
-    num_mins = max(1, min(100, request.GET.get("window", 5)))
-    fmt = request.GET.get("fmt", "html")
-    if not fmt in ["json", "html"]:
-        fmt = "html"
+    fmt = getparam(request, "fmt", "html", options=["html", "json"])
+    num_mins = getintparam(request, "window", 5, minimum=1, maximum=100, fmt=fmt)
+
     mins_ago = datetime.datetime.now() - datetime.timedelta(minutes=num_mins)
     num_errors = ExceptionModel.objects.filter(occurred_at__gte=mins_ago).order_by("-occurred_at").count()
     has_errors = num_errors > 0
@@ -87,11 +133,10 @@ def status_summary(request):
 
 def delete_old(request):
     """Deletes errors that are more than a week old."""
-
     num_tasks = int(request.GET.get("num_tasks", 0))
     deleted = int(request.GET.get("deleted", 0))
     initial_deleted = deleted
-    num_days = request.GET.get("window", 7)
+    num_days = int(request.GET.get("window", 7))
     days_ago = datetime.datetime.now() - datetime.timedelta(days=num_days)
     batch_size = 20
 

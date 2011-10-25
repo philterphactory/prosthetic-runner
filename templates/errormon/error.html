@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+<!--suppress HtmlUnknownTarget -->
+
+{% block page_specific_css %}
+<style>
+    pre {
+        position: relative;
+	    overflow: auto;
+	    width: 1000px;
+        height: 7em;
+        background-color: #f2f2f2;
+        font-size: 90%;
+        font-family: "Monaco", monospace;
+	}
+</style>
+{% endblock page_specific_css %}
+
+{% block page_title %}
+    <h1>Error while error monitoring</h1>
+{% endblock %}
+
+{% block page_body %}
+    <h1>Error {{ status_code }}: {{ message }}</h1>
+{% endblock %}
