@@ -187,6 +187,8 @@
             .script("/media/js/weavrs.prosthetic.main.js?{{ DEPLOY_ID }}").wait(
                 function() {
                     prosthetic_site.initPage();
+                    
+                    {% block page_specific_internal_javascript_to_load_after_main_js %}{% endblock page_specific_internal_javascript_to_load_after_main_js %}
                 }
             );
             /* ==== END LABjs LOADING AND EXECUTION ORDER CONTROL  ==== */

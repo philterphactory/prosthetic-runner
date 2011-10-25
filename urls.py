@@ -61,6 +61,7 @@ raw_patterns = [
 
     (r'^callback/$', "webapp.views.callback"),
 
+    (r'^errormon/', include('errormon.urls')),
 ]
 
 # this is for backwards-compatibility. Pity.

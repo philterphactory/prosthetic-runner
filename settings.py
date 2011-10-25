@@ -23,11 +23,15 @@ INSTALLED_APPS = [
     # the runner framework
     'webapp',
     
+    # the errormon helper
+    'errormon',
+    
     # prosthetics are auto-added to this list
 ]
 
 MIDDLEWARE_CLASSES = (
     #'google.appengine.ext.appstats.recording.AppStatsDjangoMiddleware',
+    'errormon.middleware.ExceptionStoreMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

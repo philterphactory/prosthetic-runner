@@ -1,0 +1,16 @@
+<html>
+<head><title>Weavrs</title></head>
+<body>
+{% block section_title %}
+    {% if has_errors %}
+        <h2 style="background-color: red; border: 1px solid black">
+            {{ num_errors }} errors in the last {{ num_mins }} minutes
+        </h2>
+    {% else %}
+        <h2 style="background-color: green; border: 1px solid black">
+            No errors in the last {{ num_mins }} minutes
+        </h2>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

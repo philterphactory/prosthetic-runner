@@ -40,6 +40,10 @@ handlers:
   script: main.py
   login: admin
 
+- url: /errormon/delete_old/.*
+  script: main.py
+  login: admin
+
 - url: /.*
   script: main.py
 
