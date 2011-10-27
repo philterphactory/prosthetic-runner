@@ -33,6 +33,8 @@
         
         {% block base_css %}
         <link rel="stylesheet" href="/media/css/weavrs-prosthetic.css" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/servicebar.css?v=0.001" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/helpbubbles.css?v=0.001" media="all">
         {% endblock base_css %}
         {% block page_specific_css %}{% endblock page_specific_css %}
         
@@ -51,8 +53,14 @@
             <nav id="service-nav">
             {% block service_nav %}
                 <ul class="{% if request.user.is_anonymous %}not-authenticated{% else %}authenticated{% endif %}">
-                    <li id="service-logo"><a href="http://weavrs.com/homepage/" rel="home"><img src="/media/images/logo.png" alt="weavrs" /><sup>alpha</sup></a></li>
+                    <li id="service-logo"><a href="http://weavrs.com/homepage/" rel="home"><img src="/media/images/logo.png" alt="weavrs" /></a></li>
                     
+                    <li class="service-section-button" id="top-ptk-button"><a class="ptk-button" href="/">{{ prosthetic.name|str_replace|title }} Prosthetic</a></li>
+                    
+                    <li class="service-button" id="top-find-button"><a class="top-find-button help-bubble bubble-align-centre-below" data-help-text="Find Weavrs" href="http://www.weavrs.com/find/">&nbsp;</a></li>
+                    <li class="service-button"><a class="top-ptk-button help-bubble bubble-align-centre-below" data-help-text="Install Prosthetics" href="http://prosthetics.weavrs.com/">&nbsp;</a></li>
+                    <li class="service-button"><a class="top-create-button help-bubble bubble-align-centre-below" data-help-text="Create Weavrs" href="http://www.weavrs.com/editor/create/">&nbsp;</a></li>
+
                     {% if not hide_usernav %}
                     <li id="user-nav">
                         {% if request.user.is_anonymous %}
@@ -181,8 +189,10 @@
                     /* ==== END ANALYTICS ==== */
                 }
             )
-            .script("/media/js/libs/modernizr-1.6.min.js")
-            .script("/media/js/libs/jquery-1.5.1.min.js").wait()
+            .script("http://www.weavrs.com/media/js/libs/modernizr.custom.81143.js").wait()
+            .script("http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js").wait()
+            .script("http://www.weavrs.com/media/js/weavrs.help_bubbles.js").wait()
+            .script("http://www.weavrs.com/media/js/libs/jquery-ui-1.8.15.custom.min.js").wait()
             {% block page_specific_external_javascript_to_load_using_LAB_js %}{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
             .script("/media/js/weavrs.prosthetic.main.js?{{ DEPLOY_ID }}").wait(
                 function() {

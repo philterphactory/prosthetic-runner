@@ -102,6 +102,7 @@ def prosthetic(request, key, prosthetic=None):
         prosthetic = get_object_or_404(Prosthetic, id=key)
     # show or hide user login
     hide_usernav = True
+    title = "Weavrs Prosthetic > %s" % prosthetic.name
     # show or hide list of associated weavrs
     show_associated = False
     return render_to_response("prosthetic.html", locals(),
