@@ -53,7 +53,7 @@
             <nav id="service-nav">
             {% block service_nav %}
                 <ul class="{% if request.user.is_anonymous %}not-authenticated{% else %}authenticated{% endif %}">
-                    <li id="service-logo"><a href="http://weavrs.com/homepage/" rel="home"><img src="/media/images/logo.png" alt="weavrs" /></a></li>
+                    <li id="service-logo"><a href="http://weavrs.com/" rel="home"><img src="/media/images/logo.png" alt="weavrs" /></a></li>
                     
                     <li class="service-section-button" id="top-ptk-button"><a class="ptk-button" href="/">{{ prosthetic.name|str_replace|title }} Prosthetic</a></li>
                     
