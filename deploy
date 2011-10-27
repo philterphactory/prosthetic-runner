@@ -71,4 +71,4 @@ if [[ $FORCE -ne 1 ]]; then
     fi
 fi
 
-time (echo "$PASSWORD" | python2.5 ./manage.py deploy --email="$EMAIL" --skip_sdk_update_check --passin --nosyncdb)
+time (echo "$PASSWORD" | python ./manage.py deploy --email="$EMAIL" --skip_sdk_update_check --passin --nosyncdb)
