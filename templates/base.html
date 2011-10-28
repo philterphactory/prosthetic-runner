@@ -22,7 +22,7 @@
         
         <!-- iPhone -->
         {% block iphone %}
-        <meta name="viewport" content="width=1032">
+        <meta name="viewport" content="width=1060">
         
         <link rel="apple-touch-icon" href="/media/images/apple-touch-icon.png" type="image/png">
         {% endblock iphone %}
@@ -33,8 +33,8 @@
         
         {% block base_css %}
         <link rel="stylesheet" href="/media/css/weavrs-prosthetic.css" media="all">
-        <link rel="stylesheet" href="http://www.weavrs.com/media/css/servicebar.css?v=0.001" media="all">
-        <link rel="stylesheet" href="http://www.weavrs.com/media/css/helpbubbles.css?v=0.001" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/servicebar.css?v=006" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/helpbubbles.css?v=006" media="all">
         {% endblock base_css %}
         {% block page_specific_css %}{% endblock page_specific_css %}
         
@@ -161,9 +161,11 @@
             // TODO - set debugging to false when on live instance
             var debugging = true;
         
-            var prosthetic_site = { 
+            var weavrs = { 
                 // this can be overwritten in page specific js files
-                initPage: function(){}
+                initPage: function(){},
+                
+                $jq: false
             }
             
             /* ==== ANALYTICS ACCOUNT ==== */
@@ -196,7 +198,11 @@
             {% block page_specific_external_javascript_to_load_using_LAB_js %}{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
             .script("/media/js/weavrs.prosthetic.main.js?{{ DEPLOY_ID }}").wait(
                 function() {
-                    prosthetic_site.initPage();
+                    $jq = $;
+                    
+                    weavrs.initHelpBubbles();
+                    
+                    weavrs.initPage();
                     
                     {% block page_specific_internal_javascript_to_load_after_main_js %}{% endblock page_specific_internal_javascript_to_load_after_main_js %}
                 }
