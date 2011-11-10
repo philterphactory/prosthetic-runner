@@ -32,6 +32,8 @@ urlpatterns = patterns('',
                       views.demo),
                       (r'^walk/(?P<weavr_name>[^/]+)$', 
                       views.walk),
+                      (r'^waevrsthetic/(?P<weavr_name>[^/]+)$', 
+                      views.waevrsthetic),
                       (r'^api/(?P<weavr_name>[^/]+)/(?P<method>[^/]+)/$', 
                       views.apiProxy),
                       )

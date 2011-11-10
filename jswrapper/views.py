@@ -123,3 +123,15 @@ def walk(request, weavr_name):
            locals(), context_instance=RequestContext(request))
 
 
+def waevrsthetic(request, weavrs_name):
+    """weavrs walk
+    """
+    logging.debug('waevrsthetic')
+    access_token = getAccessTokenFor(weavr_name)
+    logging.info(access_token)
+    title = "Waevrsthetic"
+    prosthetic = access_token.prosthetic
+    HUB_URL = 'http://%s/' % prosthetic.server
+    DEBUG = True #settings.DEBUG
+    return render_to_response('jswrapper/waevrsthetic.html',
+           locals(), context_instance=RequestContext(request))
