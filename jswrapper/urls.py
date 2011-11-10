@@ -28,12 +28,8 @@ from django.conf.urls.defaults import *
 import views
 
 urlpatterns = patterns('',
-                      (r'^demo/(?P<weavr_name>[^/]+)$', 
-                      views.demo),
-                      (r'^walk/(?P<weavr_name>[^/]+)$', 
-                      views.walk),
-                      (r'^waevrsthetic/(?P<weavr_name>[^/]+)$', 
-                      views.waevrsthetic),
-                      (r'^api/(?P<weavr_name>[^/]+)/(?P<method>[^/]+)/$', 
+                      (r'^(?P<view_name>[^/]+)/(?P<weavr_name>[^/]+)$',
+                      views.generic_js_view),
+                      (r'^api/(?P<weavr_name>[^/]+)/(?P<method>[^/]+)/$',
                       views.apiProxy),
                       )

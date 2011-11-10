@@ -54,6 +54,13 @@ class Prosthetic(models.Model):
 
     blog_keyword = models.CharField(max_length=200, null=True,blank=True)
 
+    view_title = models.CharField(max_length=512,
+        help_text="Title for the generic view for this weavr. Used (only) by jswrapper prosthetics.",
+        default="Untitled")
+    view_template = models.CharField(max_length=512,
+        help_text="Template path for the generic view for this weavr. Used (only) by jswrapper prosthetics.",
+        default="jswrapper/missing_template.html")
+
     def __unicode__(self):
         return "%s on %s"%(self.name, self.server)
     

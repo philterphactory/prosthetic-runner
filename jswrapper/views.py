@@ -99,39 +99,25 @@ def apiProxy(request, weavr_name, method):
     return HttpResponse(content=simplejson.dumps(json), mimetype="application/json")
 
 
-def demo(request, weavr_name):
-    logging.debug('demo')
+def generic_js_view(request, view_name, weavr_name):
     access_token = getAccessTokenFor(weavr_name)
-    logging.info(access_token)
-    title = "Javascript Wrapper for the Weavrs API"
     prosthetic = access_token.prosthetic
-    return render_to_response('jswrapper/index.html',
-           locals(), context_instance=RequestContext(request))
+    title = getattr(prosthetic, "view_title", "Untitled Prosthetic")
+    template = getattr(prosthetic, "view_template", "jswrapper/missing_template.html")
 
+     # TODO for james: remove these backwards compatibility hacks
+    if view_name == "demo":
+        title    = "Javascript Wrapper for the Weavrs API"
+        template = "jswrapper/index.html"
+    elif view_name == "walk":
+        title    = "Weavrs Walk"
+        template = "jswrapper/walk.html"
+    elif view_name == "waevrsthetic":
+        title    = "Waevrsthetic"
+        template = "jswrapper/waevrsthetic.html"
+    # end TODO
 
-def walk(request, weavr_name):
-    """weavrs walk
-    """
-    logging.debug('walk')
-    access_token = getAccessTokenFor(weavr_name)
-    logging.info(access_token)
-    title = "Weavrs Walk"
-    prosthetic = access_token.prosthetic
     HUB_URL = 'http://%s/' % prosthetic.server
     DEBUG = True #settings.DEBUG
-    return render_to_response('jswrapper/walk.html',
-           locals(), context_instance=RequestContext(request))
-
-
-def waevrsthetic(request, weavr_name):
-    """weavrs walk
-    """
-    logging.debug('waevrsthetic')
-    access_token = getAccessTokenFor(weavr_name)
-    logging.info(access_token)
-    title = "Waevrsthetic"
-    prosthetic = access_token.prosthetic
-    HUB_URL = 'http://%s/' % prosthetic.server
-    DEBUG = True #settings.DEBUG
-    return render_to_response('jswrapper/waevrsthetic.html',
+    return render_to_response(template,
            locals(), context_instance=RequestContext(request))

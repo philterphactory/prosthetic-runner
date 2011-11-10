@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load string_filters %}
+
+{% block environment_javascript_vars %}
+weavrs.weavr_name = "{{ weavr_name }}";
+weavrs.hub_url = "{{ HUB_URL }}";
+weavrs.debug = {% if DEBUG %}true{% else %}false{% endif %};
+{% endblock environment_javascript_vars %}
+
+{% block body_classes %} prosthetic-page{% endblock body_classes %}
+
+{% block page %}
+
+    <h1>No template configured</h1>
+    <p>The prosthetic {{ weavr_name }} does not have a configured template. Change it in the admin screen.</p>
+    
+
+{% endblock page %}
