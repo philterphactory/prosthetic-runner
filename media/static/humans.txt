@@ -4,7 +4,7 @@
 
 /* TEAM */
   Weavrs Prosthetic By: Philter Phactory
-  Site: weavrdreamr
+  Site: http://weavrs.com/
   Twitter: @weavrs
   Location: all over
 

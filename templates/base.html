@@ -33,19 +33,20 @@
         
         {% block base_css %}
         <link rel="stylesheet" href="/media/css/weavrs-prosthetic.css" media="all">
-        <link rel="stylesheet" href="http://www.weavrs.com/media/css/servicebar.css?v=006" media="all">
-        <link rel="stylesheet" href="http://www.weavrs.com/media/css/helpbubbles.css?v=006" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/servicebar.css?v=007" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/helpbubbles.css?v=007" media="all">
         {% endblock base_css %}
         {% block page_specific_css %}{% endblock page_specific_css %}
         
         {% comment %}EXTERNAL JAVASCRIPT LOADED USING LABjs - SEE BOTTOM OF THIS TEMPLATE{% endcomment %}
-        <script src="/media/js/libs/LAB.min.js"></script>
+        <script src="http://www.weavrs.com/media/js/libs/LAB.min.js"></script>
         
     {% endblock head %}
     </head>
     
-    <body class="weavrs{% block body_classes %}{% endblock body_classes %}">
+    <body class="weavrs{% block body_classes %}{% endblock body_classes %}"{% block body_attributes %}{% endblock body_attributes %}>
     {% block body %}
+    
         <header role="banner" id="top">
             <noscript><p>Hint: This site plays nicely with javascript enabled :)</p></noscript>
         {% block header %}
@@ -71,7 +72,7 @@
                             {% endblock signed_out_user_nav %}
                         {% else %}
                             {% block signed_in_user_nav %}
-                        <a href="/editor" id="user-menu-button">{% filter title %}{{ request.user|str_replace }}{% endfilter %}</a>
+                        <a href="http://www.weavrs.com/editor" id="user-menu-button">{% filter title %}{{ request.user|str_replace }}{% endfilter %}</a>
                         <ul id="user-menu">
                             <li><a href="{% url django.contrib.auth.views.logout %}">Sign out</a></li>
                         </ul>
@@ -149,28 +150,27 @@
         <!-- Javascript at the bottom for fast page loading -->
 
         <!--[if lt IE 9]>
-        <script src="/media/js/libs/excanvas.compiled.js"></script>
+        <script src="http://www.weavrs.com/media/js/libs/excanvas.compiled.js"></script>
         <![endif]-->
         <!--[if lt IE 7 ]>
-        <script src="/media/js/libs/dd_belatedpng.js"></script>
+        <script src="http://www.weavrs.com/media/js/libs/dd_belatedpng.js"></script>
         <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>
         <![endif]-->
-        
+       {% block external_js_not_loaded_using_labjs %}{% endblock external_js_not_loaded_using_labjs %}
        <script type="text/javascript">
         /* <![CDATA[ */
-            // TODO - set debugging to false when on live instance
-            var debugging = true;
         
-            var weavrs = { 
+            var weavrs = {
                 // this can be overwritten in page specific js files
                 initPage: function(){},
                 
-                $jq: false
-            }
+                $jq: false,
+                debug: true
+            };
             
             /* ==== ANALYTICS ACCOUNT ==== */
-                 
-            var _gaq = [['_setAccount', 'UA-22877632-1'], ['_trackPageview']];
+            // enter your google analytics key below
+            var _gaq = [['_setAccount', 'xx-xxxxxxxx-x'], ['_trackPageview']];
             
             /* ==== END ANALYTICS ACCOUNT ==== */
             
@@ -194,14 +194,14 @@
             .script("http://www.weavrs.com/media/js/libs/modernizr.custom.81143.js").wait()
             .script("http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js").wait()
             .script("http://www.weavrs.com/media/js/weavrs.help_bubbles.js").wait()
-            .script("http://www.weavrs.com/media/js/libs/jquery-ui-1.8.15.custom.min.js").wait()
+            .script("/media/js/libs/jquery-ui-1.8.16.custom.min.js").wait()
             {% block page_specific_external_javascript_to_load_using_LAB_js %}{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
             .script("/media/js/weavrs.prosthetic.main.js?{{ DEPLOY_ID }}").wait(
                 function() {
-                    $jq = $;
+                    weavrs.$jq = $;
                     
                     weavrs.initHelpBubbles();
-                    
+
                     weavrs.initPage();
                     
                     {% block page_specific_internal_javascript_to_load_after_main_js %}{% endblock page_specific_internal_javascript_to_load_after_main_js %}

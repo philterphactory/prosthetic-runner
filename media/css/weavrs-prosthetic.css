@@ -34,7 +34,6 @@ html > body
 {
 	overflow-x:hidden;
 	overflow-y:scroll;
-	border-top: 1px solid #555;
 }
 
 body {
@@ -709,18 +708,10 @@ input:focus {
 /* > -- END FORMS -- */
 
 
-
-
-
-body > header,
-body > section,
-body > footer {
-	overflow:hidden;
-}
 body > section {
 	padding:30px 0;
 }
-#service-nav > ul,
+
 body > section > article,
 body > footer > nav {
 	width:1000px;
@@ -729,72 +720,30 @@ body > footer > nav {
 header nav ul li {
     display: block;
     float: left;
-    margin: 0 30px 0 0;
+    margin: 0 20px 0 0;
+}
+nav li a {
+    font-size: 15px;
 }
 body > section > article > header {
 	width:800px;
 	margin: 0 auto 20px;
 }
 body > section > article > header p {
-
 	margin:20px auto 0px;
 	clear:both;
 }
 p:first-child {
 	margin-top:0px;
 }
-#service-nav > ul li#user-nav {
-	float:right;
-}
+
 body {
 	background-color:#bbb;
 }
 body > section {
 	background-color:#fff;
 }
-#service-nav {
-	height:50px;
-	border-bottom: 1px solid;
-	border-color:#1d1d1d;
-	background-color: #222; /* fallback color */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444', endColorstr='#222'); /* for IE */
-	background: -moz-linear-gradient(90deg, #222, #444);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #444), color-stop(1.0, #222));
-}
-#service-nav,
-#service-nav ul {
-	overflow:visible;
-}
 
-/* < -- SERVICE LOGO -- */
-#service-logo a {
-	line-height:30px;
-	display:block;
-	height:40px;
-	padding:0;
-	margin-top:5px;
-	font-size:17px;
-	position:relative;
-}
-#service-logo a:link,
-#service-logo a:visited {
-	color:#000;
-}
-
-#service-logo a sup {
-	font-size:0.5em;
-	text-transform:uppercase;
-	vertical-align:super;
-	position:absolute;
-	top:-13px;
-	line-height:0px;
-	font-weight:bold;
-	letter-spacing:.15em;
-	padding:10px;
-	line-height:30px;
-	color:#888;
-}
-/* > -- END SERVICE LOGO -- */
 footer nav {
 	position:relative;
 }
