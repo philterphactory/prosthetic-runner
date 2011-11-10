@@ -123,7 +123,7 @@ def walk(request, weavr_name):
            locals(), context_instance=RequestContext(request))
 
 
-def waevrsthetic(request, weavrs_name):
+def waevrsthetic(request, weavr_name):
     """weavrs walk
     """
     logging.debug('waevrsthetic')
