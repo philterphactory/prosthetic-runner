@@ -6,7 +6,7 @@ weavrs.map = false;
 
 weavrs.progress_marker = false;
 
-weavrs.previous_ajax_requests = [];
+weavrs.previous_ajax_requests = {};
 
 weavrs.maps_api_key = 'ABQIAAAAlZ4VE7rnI9OiJknNV6vobxROU4PuzPG2t-KTI8G2aUsstI59mxR1XC1OsfUjG6jo_pqp1E9U2SspHw';
 
@@ -190,7 +190,7 @@ weavrs.getConfiguration = function () {
 		complete: weavrs.ajaxComplete
 	});
 	
-	weavrs.previous_ajax_requests['get_configuration'] = ajax_request;
+	weavrs.previous_ajax_requests.get_configuration = ajax_request;
 };
 
 
@@ -222,7 +222,7 @@ weavrs.getLocations = function() {
 		complete: weavrs.ajaxComplete
 	});
 	
-	weavrs.previous_ajax_requests['get_locations'] = ajax_request;
+	weavrs.previous_ajax_requests.get_locations = ajax_request;
 };
 
 
@@ -252,7 +252,7 @@ weavrs.getNearByWeavrsLocations = function (lat, lon, radius) {
 		complete:weavrs.ajaxComplete
 	});
 	
-	weavrs.previous_ajax_requests['get_near_by_weavrs_locations'] = ajax_request;
+	weavrs.previous_ajax_requests.get_near_by_weavrs_locations = ajax_request;
 };
 
 
