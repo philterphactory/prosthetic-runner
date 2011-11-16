@@ -18,6 +18,8 @@ weavrs.current_destination = false;
 
 weavrs.sv_client = false;
 
+weavrs.greetings = ['Hey', 'Hi', 'Hello', 'Heya'];
+
 /**
 * The GRoute we are following extracted from the directions response.
 */
@@ -152,6 +154,11 @@ weavrs.advance_delay = 1;
 */
 weavrs.nearby = [];
 
+weavrs.nearby_weavrs_hello_proximity_threshold = 1000;
+
+
+weavrs.nearby_weavr_saying_hello = false;
+
 
 /*
 * configuration of weavr being viewed - retrieved from the weavrs api
@@ -167,6 +174,8 @@ weavrs.destination_phrases = ['On my way to ', 'Heading for ', 'Walking to ', 'G
 * delay used to hide the weavrs info after no mouse movement
 */
 weavrs.showInfoTimeout = false;
+
+
 
 
 // called from the LABjs process at the bottom of the base template
@@ -202,7 +211,7 @@ weavrs.getConfigurationSuccess = function (data, textStatus, jqXHR) {
 	weavrs.weavr_configuration = data;
 	
 	$('#main-weavrs-info .avatar').attr('src', weavrs.hub_url + 'api/weavrs/' + weavrs.weavr_configuration.id + '/avatar_current_image.png');
-	$('#main-weavrs-info .fn a').html(weavrs.weavr_name.replace(/(_|-)/,' '));
+	$('#main-weavrs-info h1.fn a, #main-weavrs-info .outgoing .fn a').html(weavrs.weavr_name.replace(/(_|-)/,' '));
 	
 	weavrs.getLocations();
 };
@@ -316,6 +325,7 @@ weavrs.initMap = function(lat,lon) {
 		if (typeof weavr.lon != 'undefined') {
 			weavrs.nearby[index].lon *= 0.000001;
 		}
+		weavrs.nearby[index].said_hello_already = false;
 		var gLatLng = new GLatLng(weavrs.nearby[index].lat, weavrs.nearby[index].lon);
 		var m = new GMarker(gLatLng, {title: weavrs.nearby[index].attribution});
 		weavrs.map.addOverlay(m);
@@ -672,20 +682,71 @@ weavrs.move = function () {
 		}
 	});
 	
-	weavrs.showNearByWeavrsNotifications();
+	weavrs.nearByWeavrsSayHello();
 };
 
 
-weavrs.showNearByWeavrsNotifications = function () {
+weavrs.nearByWeavrsSayHello = function () {
+	debug('>>>>>>>WEAVRS NEARBY SAY HELLO');
 	var gLatLng,
 		distance_from_nearby_weavrs,
 		nearby_weavrs = [];
 		
 	$.each(weavrs.nearby, function(index, weavr) {
-		gLatLng = new GLatLng(weavrs.nearby[index].lat, weavrs.nearby[index].lon);
+		
+		gLatLng = new GLatLng(weavr.lat, weavr.lon);
 		distance_from_nearby_weavrs = weavrs.current_vertex.distanceFrom(gLatLng);
-		debug('distance from weavr ' + weavrs.nearby[index].user + ' = ' + distance_from_nearby_weavrs);
+		debug('=============distance from weavr ' + weavr.user + ' = ' + distance_from_nearby_weavrs);
+		
+		if ((weavr.said_hello_already == false) && (distance_from_nearby_weavrs < weavrs.nearby_weavrs_hello_proximity_threshold)) {
+			if ( ! weavrs.nearby_weavr_saying_hello) {
+				weavr.said_hello_already = true;
+				weavrs.nearby_weavr_saying_hello = weavr.user;
+				weavrs.showWeavrsGreetings(weavr);
+			}
+		}
 	});
+};
+
+
+weavrs.showWeavrsGreetings = function (nearby_weavr) {
+	debug('>>>>>>>WEAVRS SHOW GREETINGS');
+	
+	var greeting = weavrs.greetings[Math.floor(Math.random() * weavrs.greetings.length)];
+	
+	// show greeting
+	$('#messages .incoming .fn a').html(nearby_weavr.user.replace(/(_|-)/,' ')).attr('href', nearby_weavr.actions[0].uri);
+	$('#messages .incoming .avatar-link').attr('href', nearby_weavr.actions[0].uri);
+	
+	$('#messages .incoming .avatar').attr('src', nearby_weavr.profile_avatar);
+	
+	$('#messages .incoming .weavrs-says').html(greeting + ' ' + weavrs.weavr_name.replace(/(_|-)/,' '));
+	
+	$('#messages').css('display', 'block');
+	
+	greeting = weavrs.greetings[Math.floor(Math.random() * weavrs.greetings.length)];
+	
+	// delayed response of current weavr to greeting from nearby weavr and switch to allow next greeting
+	setTimeout(function () {
+			$('#messages .outgoing .weavrs-says').html(greeting + ' ' + nearby_weavr.user.replace(/(_|-)/,' '));
+			$('#messages .outgoing').css('display', 'block');
+			// reset to allow for next greeting
+			setTimeout(function () {
+					$('#messages').css('display','none');
+					$('#messages .incoming .avatar').attr('src', '');
+					$('#messages .outgoing').css('display','none');
+					setTimeout(function () {
+							weavrs.nearby_weavr_saying_hello = false;
+						}, 
+						7000 + (Math.random() * 10000)
+					);
+				}, 
+				9000
+			);
+		}, 
+		2000 + (Math.random() * 2000)
+	);
+
 };
 
 
