@@ -1,0 +1,50 @@
+html, body {
+	height: 100%;
+	}
+.container_o {
+	text-align: left
+	width: 100%;
+	background: #fff;
+	padding: 25px 0;
+	text-align: center;
+	}
+#log_canvas,
+#v_canvas {
+	position: absolute;	
+	top: 50px;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	}
+#log_canvas {
+	z-index: 1;
+	background: transparent;
+	}
+#v_canvas {
+	z-index: 0;
+	background: #fff;
+	}
+#snapshot {
+	z-index: 10;
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	background-color: #FF3300;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 6px 6px 6px 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    margin-right: 6px;
+    padding: 8px 14px 7px;
+    text-decoration: none;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+	}
+footer { 
+	display:none; 
+	}
