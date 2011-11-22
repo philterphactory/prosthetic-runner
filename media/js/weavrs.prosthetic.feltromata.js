@@ -257,6 +257,10 @@ weavrs.collectColours = function () {
 	});
 	weavrs.weavr_palettes.sort(weavrs.colour_comparator);
 	weavrs.weavr_colours.sort(weavrs.colour_comparator);
+	
+	$.each(weavrs.colour_comparator, function (i, colour) {
+		$('#colours ul').append('<li class="colour-ball" style="background-colour:#' + colour.hex + '; width: ' + (colour.total * 10) + 'px; height: ' + (colour.total * 10) + 'px;"></li>');
+	});
 };
 
 weavrs.colour_comparator = function (a,b) {

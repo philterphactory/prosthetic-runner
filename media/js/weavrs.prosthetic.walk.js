@@ -8,7 +8,7 @@ weavrs.progress_marker = false;
 
 weavrs.previous_ajax_requests = {};
 
-weavrs.maps_api_key = 'ABQIAAAAlZ4VE7rnI9OiJknNV6vobxROU4PuzPG2t-KTI8G2aUsstI59mxR1XC1OsfUjG6jo_pqp1E9U2SspHw';
+weavrs.maps_api_key = 'ABQIAAAAlZ4VE7rnI9OiJknNV6vobxQUL7nOsDzUZeM93i6IVBe3_GLrdxQU8pxbetPhLI6en5VcnCiD5tFsQg';
 
 weavrs.destinations = false;
 
