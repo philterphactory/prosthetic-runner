@@ -24,17 +24,14 @@ width:15%;
 height:23%;
 }
 
-.info-overlay {
+#main-weavrs-info {
 z-index:10;
-position:absolute;
+position:relative;
 width:30%;
 max-width:350px;
-min-height:70px;
 text-align:left;
 padding:20px 30px 20px 100px;
-margin:0 auto 0 auto;
-top:100px;
-left:35%;
+margin:5% auto 0 auto;
 background-color:rgba(0,0,0,0.4);
 border-radius:10px;
 border:3px solid rgba(255,255,255,0.3);
@@ -42,37 +39,13 @@ box-shadow:0px 0px 3px rgba(0,0,0, 0.3), 0px 1px 6px rgba(0,0,0, 0.5);
 overflow:hidden;
 }
 
-#main-weavrs-info > .avatar-link .avatar {
+#main-weavrs-info .avatar {
 width:50px;
 position:absolute;
 top:20px;
 left:30px;
-border-radius:5px;
 }
-#messages {
-margin:20px 0 0 -70px;
-padding:0 0 0 0;
-border-top:1px dashed rgba(255,255,255,0.2);
-position:relative;
-display:block;
-}
-#messages li {
-display:block;
-padding:5px 5px 5px 70px;
-border-radius:10px;
-position:relative;
-margin-top:20px;
-background-color:rgba(255,255,255,0.2);
-overflow:hidden;
-height:45px;
-}
-#messages .avatar-link .avatar {
-width:45px;
-position:absolute;
-top:5px;
-left:5px;
-border-radius:5px;
-}
+
 h1 {
 font-size:18px;
 margin:-13px 0 0 0;
@@ -80,37 +53,23 @@ line-height:38px;
 }
 .fn a {
 text-transform: capitalize;
-color:#60a8ff;
-font-weight:bold;
-}
-#messages li .fn a {
-font-size:14px;
-}
-#messages li .fn {
-position:absolute;
-top:5px;
-line-height:15px;
-}
-#messages li .weavrs-says {
-margin-top:20px;
+color:#4088ea;
 }
 .title {
 font-size:23px;
 line-height:35px;
 padding-bottom:5px;
 }
-#messages li .weavrs-says,
 .address {
 font-size:16px;
 line-height:25px;
 }
-#messages li .weavrs-says,
 .title, .address {
 font-family:georgia,serif;
 font-style:italic;
 }
-h1, .title, .address, time, #messages {
-text-shadow:0 1px 3px #000, 0 0 0px #666;
+h1, .title, .address, time {
+text-shadow:0 1px 3px #000, 0 0 0px #999;
 color:#fff;
 font-weight:bold;
 }

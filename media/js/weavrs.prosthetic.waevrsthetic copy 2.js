@@ -127,28 +127,34 @@ function writeLocation(location) {
 function writeImage(){
 	var url = image_buffer.pop();
 	if (url) {
-		var img = new Image();	
-	 	img.src = url;
-  		img.onload = function() {	
-  			v_context.globalAlpha = Math.floor(Math.random()*75) / 100;
-			// size of clipped image
-			var dw = Math.floor(Math.random()*(img.width));
-			var dh = Math.floor(Math.random()*(img.height));
-			// origin of clip
-			var sx = Math.floor(Math.random()*(img.width - dw));
-			var sy = Math.floor(Math.random()*(img.width - dh));
-			// size of clip again (no stretching)
-			var sw = dw;
-			var sh = dh;
-			// placement of clip
-			var dx = Math.floor(Math.random()*(801-img.width));
-			var dy = Math.floor(Math.random()*(501-img.height));
-			// draw it
-			v_context.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
-			counter_images = counter_images+1;
-			updateCounter();
-			}
-		}
+		$.getImageData({
+			url: url,
+			success: onImageLoaded,
+			error: function(xhr, text_status) {
+				//show error message
+				$("#debug").text("Image not found.");
+				}
+			});
+  		}
+	}
+function onImageLoaded(img) {
+  	v_context.globalAlpha = Math.floor(Math.random()*75) / 100;
+	// size of clipped image
+	var dw = Math.floor(Math.random()*(img.width));
+	var dh = Math.floor(Math.random()*(img.height));
+	// origin of clip
+	var sx = Math.floor(Math.random()*(img.width - dw));
+	var sy = Math.floor(Math.random()*(img.width - dh));
+	// size of clip again (no stretching)
+	var sw = dw;
+	var sh = dh;
+	// placement of clip
+	var dx = Math.floor(Math.random()*(801-img.width));
+	var dy = Math.floor(Math.random()*(501-img.height));
+	// draw it
+	v_context.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+	counter_images = counter_images+1;
+	updateCounter();
 	}
 	
 weavrs.getConfiguration = function () {
