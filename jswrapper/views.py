@@ -115,6 +115,9 @@ def generic_js_view(request, view_name, weavr_name):
     elif view_name == "waevrsthetic":
         title    = "Waevrsthetic"
         template = "jswrapper/waevrsthetic.html"
+    elif view_name == "feltromata":
+        title    = "Feltromata"
+        template = "jswrapper/feltromata.html"
     # end TODO
 
     HUB_URL = 'http://%s/' % prosthetic.server

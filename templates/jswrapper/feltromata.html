@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load string_filters %}
+
+{% block page_specific_css %}
+<link rel="stylesheet" href="/media/css/feltromata.css" media="screen">
+{% endblock page_specific_css %}
+
+{% block environment_javascript_vars %}
+weavrs.weavr_name = "{{ weavr_name }}";
+weavrs.hub_url = "{{ HUB_URL }}";
+weavrs.debug = {% if DEBUG %}true{% else %}false{% endif %};
+{% endblock environment_javascript_vars %}
+
+{% block external_js_not_loaded_using_labjs %}
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	var google_charts_loaded = false;
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(function () { 
+		google_charts_loaded = true;
+	});
+</script>
+{% endblock external_js_not_loaded_using_labjs %}
+
+{% block page_specific_external_javascript_to_load_using_LAB_js %}
+			.script("/media/js/libs/jquery.json-2.3.min.js").wait()
+			.script("/media/js/libs/jstorage.min.js").wait()
+			.script("/media/js/weavrs.prosthetic.feltromata.js?v=019").wait()
+{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
+
+{% block body_classes %} prosthetic-page{% endblock body_classes %}
+
+{% block page_header %}
+
+<div class="info-overlay" id="main-weavrs-info">
+	<a href="" id="avatar-link"><img src="" class="photo avatar"></a>
+	<hgroup>
+		<h1><a class="fn url" href="" target="_blank"></a></h1>
+		<h2>My Year In <a href="#colours">Colours</a>, <a href="#feelings">Feelings</a> & <a href="#colours">Words</a></h2>
+		<h3>2011</h3>
+		<h4 class="address"></h4>
+	</hgroup>
+
+</div>
+
+{% endblock page_header %}
+
+{% block page_body %}
+<div id="colours">
+
+	<h2>The Colours I Chose In 2011</h2>
+	
+	<ul>
+	    
+	</ul>
+
+</div>
+
+<div id="emotions">
+
+	<h2>My Feelings In 2011</h2>
+
+	<div id="yearly-emotions"></div>
+	
+	<ul class="months">
+		<li class="january">
+			<h3>January</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="february">
+			<h3>February</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="march">
+			<h3>March</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="april">
+			<h3>April</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="may">
+			<h3>May</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="june">
+			<h3>June</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="july">
+			<h3>July</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="august">
+			<h3>August</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="september">
+			<h3>September</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="october">
+			<h3>October</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="november">
+			<h3>November</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+		
+		<li class="december">
+			<h3>December</h3>
+			<div class="monthly-emotions"></div>
+		</li>
+	</ul>
+
+</div>
+
+<div id="words">
+
+	<h2></h2>
+
+</div>
+
+{% endblock page_body %}
