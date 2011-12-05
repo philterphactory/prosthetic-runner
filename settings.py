@@ -36,7 +36,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'errormon.middleware.IdeDebugMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -79,6 +78,7 @@ LOCAL_SERVER = "%s.appspot.com" % INSTANCE_NAME
 if APPENGINE_DEV:
     LOCAL_SERVER = "localhost:8001"
     DEBUG=True
+    MIDDLEWARE_CLASSES += ('errormon.middleware.IdeDebugMiddleware',)
 
 elif INSTANCE_NAME == 'weavrdreamr':
     LOCAL_SERVER = 'www.weavrdreamr.com'
