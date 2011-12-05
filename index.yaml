@@ -157,6 +157,11 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: recipeer_recipeoptions
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: slideshare_slideshareconfig
   properties:
   - name: __key__
