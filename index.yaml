@@ -89,6 +89,11 @@ indexes:
 
 - kind: mmm_genny
   properties:
+  - name: __key__
+    direction: desc
+
+- kind: mmm_genny
+  properties:
   - name: monomyth_id
   - name: name
 
