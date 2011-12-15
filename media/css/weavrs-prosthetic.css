@@ -196,9 +196,28 @@ hgroup h4 {
 	line-height:23px;
 	font-size:14px;
 }
+
 .description p {
 	font-size:14px;
-	line-height:30px;
+	line-height:22px;
+	max-width:500px;
+}
+
+ol.steps {
+	margin:20px 0 20px 240px;
+	display:block;
+
+}
+ol.steps li {
+	list-style:decimal;
+	list-style-position:outside;
+	font-size:16px;
+	line-height:25px;
+	max-width:500px;
+	margin:0 0 12px;
+}
+ol.steps li em {
+	color:#aaa;
 }
 
 h1 + h3 {
@@ -247,7 +266,8 @@ a.big-button,
 	height:30px;
 }
 input {
-	line-height:30px;
+	line-height:20px;
+
 }
 
 sup {
@@ -258,9 +278,7 @@ sup {
 p {
 	font-size:13.34px;
 }
-p + p {
-	text-indent:30px;
-}
+
 .static .numbered-list,
 p + ol,
 p + ul {
@@ -504,9 +522,18 @@ form button {
 	line-height:30px;
 }
 input {
-    padding:5px;
+    padding:10px;
     outline:0;
     background-color:#fff;
+    display:block;
+    clear:both;
+    width:485px !important;
+	font-size:1.5em;
+}
+label {
+	line-height:30px;
+	padding-bottom:20px;
+	display:block;
 }
 form > fieldset > h2 { 
     cursor: pointer;
@@ -553,7 +580,8 @@ textarea,
 input[type="text"],
 input[type="url"],
 input[type="search"],
-input[type="email"] {
+input[type="email"],
+input[type="password"] {
     -moz-box-shadow: inset 0px 1px 3px 1px rgba(0,0,0,0.1);
     -webkit-box-shadow: inset 0px 1px 3px 1px  rgba(0,0,0,0.1);
     box-shadow: inset 0px 2px 3px 1px  rgba(0,0,0,0.1);
@@ -726,9 +754,15 @@ nav li a {
     font-size: 15px;
 }
 body > section > article > header {
-	width:800px;
+	width:980px;
 	margin: 0 auto 20px;
 }
+
+hgroup {
+	margin:0 auto 20px;
+	width:800px;
+}
+
 body > section > article > header p {
 	margin:20px auto 0px;
 	clear:both;
