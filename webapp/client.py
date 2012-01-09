@@ -31,8 +31,7 @@ import urllib
 import cgi
 from google.appengine.api import urlfetch
 
-# python 2.6
-try: import simplejson as json
+try: from django.utils import simplejson as json
 except ImportError: import json
 
 ################################################################################

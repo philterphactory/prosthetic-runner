@@ -32,7 +32,7 @@ from django.db import models
 from django.contrib import messages
 from django.utils.html import escape
 
-try: import simplejson as json
+try: from django.utils import simplejson as json
 except ImportError: import json
 
 import datetime

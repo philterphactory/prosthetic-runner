@@ -23,13 +23,12 @@
 # Phactory Ltd..
 #
 
-import simplejson
 import datetime
 import random
 import re
 import logging
 
-try: import simplejson as json
+try: from django.utils import simplejson as json
 except ImportError: import json
 
 class Prosthetic(object):

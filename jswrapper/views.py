@@ -29,7 +29,6 @@
 # and activity outside of their blogs.
 # ----
 import logging
-import simplejson
 
 from django.conf import settings
 from django.http import HttpResponse, Http404
@@ -39,7 +38,7 @@ from django.shortcuts import render, render_to_response, get_object_or_404
 from jswrapper.prosthetic import JsWrapper
 from webapp.models import AccessToken, Prosthetic
 
-try: import simplejson as json
+try: from django.utils import simplejson as json
 except ImportError: import json
 
 

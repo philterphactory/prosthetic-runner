@@ -27,7 +27,7 @@ import re
 from django import template
 register = template.Library()
 
-try: import simplejson as json
+try: from django.utils import simplejson as json
 except ImportError: import json
 
 @register.filter

@@ -44,7 +44,7 @@ from google.appengine.api import urlfetch
    
 import oauth.oauth as oauth
    
-try: import simplejson as json
+try: from django.utils import simplejson as json
 except ImportError: import json
    
 from client import OAuthForbiddenException
