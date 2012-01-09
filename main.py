@@ -32,7 +32,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__),'bleach.zip'))
 from djangoappengine.boot import setup_env
 setup_env()
 
-
+#noinspection PyUnresolvedReferences
+from djangoappengine.main.main import application
 
 if __name__ == '__main__':
     from djangoappengine.main.main import main

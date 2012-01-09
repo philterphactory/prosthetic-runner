@@ -57,6 +57,28 @@ def real_main():
     # Run the WSGI CGI handler with that application.
     run_wsgi_app(application)
 
+# WVRS-61: quick hack to make djangoappengine work on GAE 1.6 without upgrading
+def application(environ, start_response):
+    # Reset path and environment variables
+    global path_backup
+    try:
+        sys.path = path_backup[:]
+    except Exception:
+        path_backup = sys.path[:]
+    os.environ.update(env_ext)
+    setup_logging()
+
+    # Create a Django application for WSGI
+    handler = WSGIHandler()
+
+    # Add the staticfiles handler if necessary
+    if settings.DEBUG and 'django.contrib.staticfiles' in settings.INSTALLED_APPS:
+        from django.contrib.staticfiles.handlers import StaticFilesHandler
+        application = StaticFilesHandler(application)
+
+    # Run the WSGI CGI handler with that application.
+    return handler(environ, start_response)
+    
 def profile_main(func):
     from cStringIO import StringIO
     import cProfile
