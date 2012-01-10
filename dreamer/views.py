@@ -24,6 +24,9 @@
 #
 
 from django.http import HttpResponse, HttpResponseNotFound
+from google.appengine.api.taskqueue.taskqueue import Task
+from google.appengine.ext.deferred import deferred
+from errormon.views import admin_required
 
 from models import *
 
@@ -44,3 +47,61 @@ def dreamTest(request):
     image_data = urlfetch.Fetch(url).content
     image = ImageCache.weave(image_data)
     return HttpResponse(image, mimetype="image/jpeg")
+
+# secure using GAE @admin_required
+def fixImageCaches(request):
+    queueFixImageCaches(0)
+    return HttpResponse('QUEUED')
+
+def queueFixImageCaches(offset, countdown=0):
+    task = Task(url="/dreamer/admin/run-fix-image-caches/%d" % offset, method="POST", countdown=countdown)
+    task.add('default')
+
+# secure using GAE @admin_required
+def runFixImageCaches(request, offset):
+    offset = int(offset)
+    limit = 50
+    query = ImageCache.all(keys_only=True).fetch(limit + 1, offset)
+    results = list(query)
+    if len(results) > limit:
+        results.pop()
+        continue_at = offset + limit
+    else:
+        continue_at = None
+    i = 0
+    for result in results:
+        i += 1
+        countdown = max(0, offset + (i / 2))
+        task = Task(url="/dreamer/admin/fix-image/%s" % result.id_or_name(), method="POST", countdown=countdown)
+        task.add('default')
+    if continue_at:
+        queueFixImageCaches(continue_at, countdown=max(10, limit/2))
+    return HttpResponse('OK')
+
+# secure using GAE @admin_required
+def runFixImageCache(request, imageId):
+    cache = None
+    try:
+        imageIdInt = int(imageId)
+    except ValueError:
+        pass
+    else:
+        cache = ImageCache.get_by_id(imageIdInt)
+    if cache is None:
+        cache = ImageCache.get_by_key_name(imageId)
+
+    if cache is None:
+        logging.warning(u"Cannot find image cache %s to fix" % imageId)
+        return HttpResponse()
+    
+    image_data = urlfetch.Fetch(cache.url).content
+    
+    image = ImageCache.weave(image_data)
+    if not image:
+        return HttpResponse()
+
+    blob = db.Blob(image)
+    cache.image = blob
+    cache.save()
+    logging.info(u"Fixed image %s" % imageId)
+    return HttpResponse()

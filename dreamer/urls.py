@@ -30,5 +30,7 @@ import views
 urlpatterns = patterns('',
     ( r"^image/(.*?)/$", views.dreamImage ),
     ( r"^test/$", views.dreamTest ),
+    ( r"^admin/fix-image-caches/$", views.fixImageCaches ),
+    ( r"^admin/run-fix-image-caches/(?P<offset>\d+)$", views.runFixImageCaches ),
+    ( r"^admin/fix-image/(?P<imageId>[^/]+)$", views.runFixImageCache ),
 )
-

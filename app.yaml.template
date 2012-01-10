@@ -55,6 +55,10 @@ handlers:
   script: main.application
   login: admin
 
+- url: /dreamer/admin/.*
+  script: main.application
+  login: admin
+
 - url: /.*
   script: main.application
 
