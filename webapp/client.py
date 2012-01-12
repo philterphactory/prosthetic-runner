@@ -46,6 +46,9 @@ class OAuthUnauthorizedException(Exception):
 
 class OAuthServerException(Exception):
     pass
+
+class OAuthRequestException(Exception):
+    pass
     
 class OAuthWrangler(object):
     """OAuth registration and resource access support"""
@@ -85,6 +88,9 @@ class OAuthWrangler(object):
             raise OAuthUnauthorizedException(body)
         if int(response.status_code) == 403:
             raise OAuthForbiddenException()
+        if int(response.status_code) == 400:
+            logging.warn("sent bad request 400: %s" % body)
+            raise OAuthRequestException(body)
 
         logging.warn("unexpected server response %d: %s"%(response.status_code,body))
         raise OAuthServerException(body)
