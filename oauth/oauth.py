@@ -29,6 +29,7 @@ import random
 import urlparse
 import hmac
 import binascii
+from django.utils.encoding import smart_str
 
 
 VERSION = '1.0' # Hi Blaine!
@@ -627,11 +628,11 @@ class OAuthSignatureMethod_HMAC_SHA1(OAuthSignatureMethod):
 
         # HMAC object.
         try:
-            import hashlib # 2.5
-            hashed = hmac.new(key, raw, hashlib.sha1)
-        except:
-            import sha # Deprecated
-            hashed = hmac.new(key, raw, sha)
+            from hashlib import sha1 # 2.5
+        except ImportError:
+            import sha as sha1 # Deprecated
+        # LSD 2012-01-10 added smart_str -- http://bugs.python.org/issue5285
+        hashed = hmac.new(smart_str(key), smart_str(raw), sha1)
 
         # Calculate the digest base 64.
         return binascii.b2a_base64(hashed.digest())[:-1]
