@@ -38,7 +38,7 @@ handlers:
   
 # for django-admin static files, serve the entire django source zipfile as static.
 - url: /django-nonrel/.*
-  script: webapp.zipserver.application
+  script: webapp.zipserve.application
 
 - url: /remote_api
   script: google.appengine.ext.remote_api.handler.application
