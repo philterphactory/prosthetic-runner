@@ -4,7 +4,7 @@ from urllib2 import HTTPError, URLError
 import logging
 import time
 
-REMOTE_API_SCRIPT = '$PYTHON_LIB/google/appengine/ext/remote_api/handler.py'
+REMOTE_API_SCRIPT = 'google.appengine.ext.remote_api.handler.application'
 
 def auth_func():
     import getpass
@@ -64,6 +64,7 @@ class StubManager(object):
         if self.active_stubs == 'remote':
             return
         if not connection.remote_api_path:
+            connection.remote_api_path = '/_ah/remote_api'
             from ..utils import appconfig
             for handler in appconfig.handlers:
                 if handler.script == REMOTE_API_SCRIPT:
