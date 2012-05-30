@@ -5,7 +5,8 @@ api_version: 1
 threadsafe: false
 
 builtins:
-- datastore_admin: on
+# we don't seem to use this
+#- datastore_admin: on
 #- appstats: on
 
 libraries:
