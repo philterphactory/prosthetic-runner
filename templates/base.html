@@ -1,0 +1,219 @@
+{% load string_filters %}<!doctype html>
+<!--[if lt IE 7 ]> <html lang="{% firstof LANGUAGE_CODE 'en' %}" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="{% firstof LANGUAGE_CODE 'en' %}" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="{% firstof LANGUAGE_CODE 'en' %}" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="{% firstof LANGUAGE_CODE 'en' %}" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{% firstof LANGUAGE_CODE 'en' %}" class="no-js"> <!--<![endif]-->
+    <head>
+    {% block head %}
+        <meta charset="UTF-8">
+        
+        <title>{{ title }}</title>
+
+        <meta name="revised" content="">
+        <meta name="robots" content="nofollow noindex, noodp, noydir">
+        <meta name="googlebot" content="noindex">
+        <meta name="siteinfo" content="/media/static/robots.txt">
+
+        <meta name="publisher" content="philterphactory">
+        <meta name="author" content="philterphactory" >
+        <meta name="description" content="">
+        <meta name="Reply-To" content="reception@philterphactory.com">
+        
+        <!-- iPhone -->
+        {% block iphone %}
+        <meta name="viewport" content="width=1060">
+        
+        <link rel="apple-touch-icon" href="/media/images/apple-touch-icon.png" type="image/png">
+        {% endblock iphone %}
+
+        <!-- site links -->
+        <link rel="author" type="text/plain" href="/media/static/humans.txt" />
+        <link rel="shortcut icon" type="image/x-icon" href="/media/images/favicon.ico">
+        
+        {% block base_css %}
+        <link rel="stylesheet" href="/media/css/weavrs-prosthetic.css" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/servicebar.css?v=007" media="all">
+        <link rel="stylesheet" href="http://www.weavrs.com/media/css/helpbubbles.css?v=007" media="all">
+        {% endblock base_css %}
+        {% block page_specific_css %}{% endblock page_specific_css %}
+        
+        {% comment %}EXTERNAL JAVASCRIPT LOADED USING LABjs - SEE BOTTOM OF THIS TEMPLATE{% endcomment %}
+        <script src="http://www.weavrs.com/media/js/libs/LAB.min.js"></script>
+        
+    {% endblock head %}
+    </head>
+    
+    <body class="weavrs{% block body_classes %}{% endblock body_classes %}"{% block body_attributes %}{% endblock body_attributes %}>
+    {% block body %}
+    
+        <header role="banner" id="top">
+            <noscript><p>Hint: This site plays nicely with javascript enabled :)</p></noscript>
+        {% block header %}
+        
+            <nav id="service-nav">
+            {% block service_nav %}
+                <ul class="{% if request.user.is_anonymous %}not-authenticated{% else %}authenticated{% endif %}">
+                    <li id="service-logo"><a href="http://weavrs.com/" rel="home"><img src="/media/images/logo.png" alt="weavrs" /></a></li>
+                    
+                    <li class="service-section-button" id="top-ptk-button"><a class="ptk-button" href="/">{{ prosthetic.name|str_replace|title }} Prosthetic</a></li>
+                    
+                    <li class="service-button" id="top-find-button"><a class="top-find-button help-bubble bubble-align-centre-below" data-help-text="Find Weavrs" href="http://www.weavrs.com/find/">&nbsp;</a></li>
+                    <li class="service-button"><a class="top-ptk-button help-bubble bubble-align-centre-below" data-help-text="Install Prosthetics" href="http://prosthetics.weavrs.com/">&nbsp;</a></li>
+                    <li class="service-button"><a class="top-create-button help-bubble bubble-align-centre-below" data-help-text="Create Weavrs" href="http://www.weavrs.com/editor/create/">&nbsp;</a></li>
+
+                    {% if not hide_usernav %}
+                    <!--<li id="user-nav">
+                        {% if request.user.is_anonymous %}
+                            {% block signed_out_user_nav %}
+                        <ul>
+                            <li><a href="{% url django.contrib.auth.views.login %}">Sign In</a></li>
+                        </ul>
+                            {% endblock signed_out_user_nav %}
+                        {% else %}
+                            {% block signed_in_user_nav %}
+                        <a href="http://www.weavrs.com/editor" id="user-menu-button">{% filter title %}{{ request.user|str_replace }}{% endfilter %}</a>
+                        <ul id="user-menu">
+                            <li><a href="{% url django.contrib.auth.views.logout %}">Sign out</a></li>
+                        </ul>
+                            {% endblock signed_in_user_nav %}
+                        {% endif %}
+                    </li>-->
+                        
+                    {% endif %}
+                </ul>
+            {% endblock service_nav %}
+            </nav>
+    
+        {% endblock header %}
+        </header>
+        
+        {% block page %}
+        <section role="main">
+
+            {% if error %}<div class="error"><p>{{ error }}</p></div>{% endif %}
+    
+            {% if info %}<div class="info"><p>{{ info }}</p></div>{% endif %}
+        
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            
+            <article>
+                
+                <header>
+                {% block page_header %}
+                
+                    {% block page_title %}
+
+                    {% endblock page_title %}
+                    
+                    {% block page_header_content %}
+                    
+                    {% endblock page_header_content %}
+                    
+                {% endblock page_header %}
+                </header>
+                
+                <section class="page-body">
+                {% block page_body %}
+                
+                {% endblock page_body %}
+                </section>
+                
+                {% comment %} Page Footer is optional {% endcomment %}
+                {% block page_footer %}{% endblock page_footer %}
+                
+             </article>
+
+        </section>
+        {% endblock page %}
+        
+        <footer>
+        {% block footer %}
+
+            <nav>
+
+                <ul id="legals">
+                    <li id="attribution"><a rel="external license" href="http://philterphactory.com/">Philter Phactory</a> <span>&copy; {% now "Y" %} all rights reserved</span></li>
+                </ul>
+            </nav>
+
+        {% endblock footer %}
+        </footer>
+        
+        <!-- Javascript at the bottom for fast page loading -->
+
+        <!--[if lt IE 9]>
+        <script src="http://www.weavrs.com/media/js/libs/excanvas.compiled.js"></script>
+        <![endif]-->
+        <!--[if lt IE 7 ]>
+        <script src="http://www.weavrs.com/media/js/libs/dd_belatedpng.js"></script>
+        <script> DD_belatedPNG.fix('img, .png_bg'); //fix any <img> or .png_bg background-images </script>
+        <![endif]-->
+       {% block external_js_not_loaded_using_labjs %}{% endblock external_js_not_loaded_using_labjs %}
+       <script type="text/javascript">
+        /* <![CDATA[ */
+        
+            var weavrs = {
+                // this can be overwritten in page specific js files
+                initPage: function(){},
+                
+                $jq: false,
+                debug: true
+            };
+            
+            /* ==== ANALYTICS ACCOUNT ==== */
+            // enter your google analytics key below
+            var _gaq = [['_setAccount', 'xx-xxxxxxxx-x'], ['_trackPageview']];
+            
+            /* ==== END ANALYTICS ACCOUNT ==== */
+            
+            // declare and set server side / environment variables into js context
+            {% block environment_javascript_vars %}{% endblock environment_javascript_vars %}
+            
+            // TODO: load LABjs itself dynamically??
+            // see http://labjs.com/
+            /* ==== LABjs = OPTIMIZED PARALLEL JAVASCRIPT (PRE)LOADING AND EXECUTION ORDER CONTROL  ==== */
+            $LAB
+            .setOptions({AllowDuplicates:false, AppendTo:'body'})
+            .script("http://www.google-analytics.com/ga.js").wait(
+                function() {
+                    /* ==== ANALYTICS ==== */
+                 
+                    {% block google_analytics_extra_tracking %}{% endblock google_analytics_extra_tracking %}
+            
+                    /* ==== END ANALYTICS ==== */
+                }
+            )
+            .script("http://www.weavrs.com/media/js/libs/modernizr.custom.81143.js").wait()
+            .script("http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js").wait()
+            .script("http://www.weavrs.com/media/js/weavrs.help_bubbles.js").wait()
+            .script("/media/js/libs/jquery-ui-1.8.16.custom.min.js").wait()
+            {% block page_specific_external_javascript_to_load_using_LAB_js %}{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
+            .script("/media/js/weavrs.prosthetic.main.js?{{ DEPLOY_ID }}").wait(
+                function() {
+                    weavrs.$jq = $;
+                    
+                    weavrs.initHelpBubbles();
+
+                    weavrs.initPage();
+                    
+                    {% block page_specific_internal_javascript_to_load_after_main_js %}{% endblock page_specific_internal_javascript_to_load_after_main_js %}
+                }
+            );
+            /* ==== END LABjs LOADING AND EXECUTION ORDER CONTROL  ==== */
+
+        /* ]]> */
+        </script>
+        
+        
+    {% endblock body %}
+    </body>
+    
+</html>

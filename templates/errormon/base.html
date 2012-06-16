@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+<!--suppress HtmlUnknownTarget -->
+
+{% block page_specific_css %}
+<style>
+    pre {
+        position: relative;
+	    overflow: auto;
+	    width: 1000px;
+        height: 7em;
+        background-color: #f2f2f2;
+        font-size: 90%;
+        font-family: "Monaco", monospace;
+	}
+</style>
+{% endblock page_specific_css %}
+
+{% block page_title %}
+    <h1>Error Monitoring</h1>
+{% endblock %}
+
+{% block page_body %}
+    <a href="/errormon/status/">Current errors</a> |
+    <a href="/errormon/">Recent errors</a> |
+    <a href="/errormon/delete_old/">Delete old errors</a>
+
+    {% block section_title %}
+        <h2>Error list:</h2>
+    {% endblock %}
+    {% if recent_errors %}
+        <table style="width: 1000px; margin-left: 50px">
+        {% for e in recent_errors %}
+            <tr style="border:  1px solid gray; margin-top: 10px">
+                <td style="padding: 2px"><h3>{{ e.exc_type }}: {{ e.exc_value }}</h3></td>
+                <td style="padding: 2px" width="300"><h3><a href="{{ e.req_path }}">{{ e.req_path }}</a></h3>
+                <td style="padding: 2px" width="200"><h3>{{ e.occurred_at }}</h3></td>
+            </tr>
+            <tr>
+                <td style="padding-top: 2px" colspan="3">
+                    Traceback:
+                    <pre><code>{{ e.exc_traceback }}</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-top: 2px" colspan="3">
+                    Request:
+                    <pre><code>{{ e.req_method }} {{ e.req_path }}
+{{ e.req_headers }}
+{{ e.req_data }}</code></pre>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
+
+<script type="text/javascript">
+{% block page_specific_internal_javascript_to_load_after_main_js %}
+    $(function(){
+        $("pre").hover(function() {
+            var codeInnerHeight = $("code", this).height() + 10;
+            if (codeInnerHeight > 100) {
+                if (codeInnerHeight < 500){
+                    $(this).stop(true, false)
+                            .css({zIndex:"99",position:"relative",overflow:"hidden"})
+                            .animate({height:codeInnerHeight});
+                } else {
+                    $(this).stop(true, false)
+                            .css({zIndex:"99",position:"relative",overflow:"scroll"})
+                            .animate({height:500});
+                }
+            }
+        }, function() {
+            $(this).stop(true, false)
+                        .css({overflow:"auto"})
+                        .animate({height:100});
+        });
+    });
+{% endblock page_specific_internal_javascript_to_load_after_main_js %}
+</script>

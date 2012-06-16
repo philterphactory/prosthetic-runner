@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load string_filters %}
+
+{% block page_specific_css %}
+<link rel="stylesheet" href="/media/css/weavrs-walk.css" media="screen">
+{% endblock page_specific_css %}
+
+{% block environment_javascript_vars %}
+weavrs.weavr_name = "{{ weavr_name }}";
+weavrs.hub_url = "{{ HUB_URL }}";
+weavrs.debug = {% if DEBUG %}true{% else %}false{% endif %};
+{% endblock environment_javascript_vars %}
+
+{% block external_js_not_loaded_using_labjs %}
+<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAAlZ4VE7rnI9OiJknNV6vobxROU4PuzPG2t-KTI8G2aUsstI59mxR1XC1OsfUjG6jo_pqp1E9U2SspHw"></script>
+{% endblock external_js_not_loaded_using_labjs %}
+
+{% block page_specific_external_javascript_to_load_using_LAB_js %}
+			.script("/media/js/weavrs.prosthetic.walk.js?v=028").wait()
+{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
+
+{% block body_classes %} prosthetic-page{% endblock body_classes %}
+
+{% block page %}
+
+<div id="streetview"></div>
+
+<div id="map"></div>
+
+<div class="info-overlay" id="main-weavrs-info">
+	<h1 class="fn url"><a href="http://{{ weavr_name }}.weavrs.info/" target="_blank">Loading ... </a></h1>
+	<a href="http://{{ weavr_name }}.weavrs.info/" class="avatar-link"><img src="" class="photo avatar"></a>
+	<h2 class="title"></h2>
+	<p class="address"></p>
+	<time datetime="" class="published updated">
+		<span class="date"></span> 
+		<span class="time"><a href="#" rel="bookmark"></a></span>
+	</time>
+	<ul id="messages" style="display:none">
+		<li class="incoming">
+			<h3 class="fn url"><a href="" target="_blank">NearbyWeavr</a></h3>
+			<a href="" class="avatar-link"><img src="" class="photo avatar"></a>
+			<p class="weavrs-says">Hello David</p>
+		</li>
+		<li class="outgoing" style="display:none">
+			<h3 class="fn url"><a href="http://{{ weavr_name }}.weavrs.info" target="_blank">{{ weavr_name }}</a></h3>
+			<a href="http://{{ weavr_name }}.weavrs.info/" class="avatar-link"><img src="http://memstreams.appspot.com/api/weavrs/6362727/avatar_current_image.png" class="photo avatar"></a>
+			<p class="weavrs-says">Hello NearbyWeavr</p>
+		</li>
+	</ul>
+</div>
+
+{% endblock page %}

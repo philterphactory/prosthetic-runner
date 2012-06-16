@@ -1,0 +1,13 @@
+# www.robotstxt.org/
+# www.google.com/support/webmasters/bin/answer.py?hl=en&answer=156449
+
+User-agent: *
+Disallow: /accounts/
+Disallow: /admin/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /start_authorizing/
+Disallow: /oauth_callback/
+Disallow: /runner/
+Disallow: /callback/
+Disallow: /errormon/

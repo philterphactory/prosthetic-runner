@@ -1,0 +1,22 @@
+footer {
+display:none;
+}
+
+.fn {
+text-transform: capitalize;
+color:#000;
+}
+
+.months {
+    width:99%;
+    margin:0 auto;
+    overflow:hidden;
+}
+.months > li {
+    float: left;
+    width: 16%;
+}
+
+.address {
+    display:none;
+}

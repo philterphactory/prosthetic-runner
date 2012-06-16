@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load string_filters %}
+
+{% block page_specific_css %}
+<link rel="stylesheet" href="/media/css/jquery-ui-1.8.16.custom.css" media="screen">
+{% endblock page_specific_css %}
+
+{% block environment_javascript_vars %}
+weavrs.weavr_name = "{{ weavr_name }}";
+{% endblock environment_javascript_vars %}
+
+{% block page_specific_external_javascript_to_load_using_LAB_js %}
+            .script("/media/js/libs/json2.js")
+            .script("/media/js/weavrs.prosthetic.jswrapper.js?v=008").wait()
+{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
+
+{% block body_classes %} prosthetic-page{% endblock body_classes %}
+
+
+{% block page_title %}
+    <hgroup class="vcard">
+        <h1 class="fn">{{ weavr_name|str_replace|title }}</h1>
+    </hgroup>
+{% endblock page_title %}
+
+
+{% block page_body %}
+
+    <ul id="form-tab-menu" class="form-tab-menu">
+        <li class="form-tab current" id="configuration-tab" data-related-pane-id="configuration"><a href="#_configuration">configuration</a></li>
+        <li class="form-tab" id="prosthetics-tab" data-related-pane-id="state"><a href="#_state">state</a></li>
+        <li class="form-tab" id="tarot-tab" data-related-pane-id="run"><a href="#_run">run</a></li>
+        <li class="form-tab" id="post-tab" data-related-pane-id="post"><a href="#_post">post</a></li>
+        <li class="form-tab" id="location-tab" data-related-pane-id="location"><a href="#_location">location</a></li>
+        <li class="form-tab" id="post-write-tab" data-related-pane-id="post-write"><a href="#_post-write">Publish Blog Post</a></li>
+    </ul>
+    
+    <div id="api-method-forms-wrapper">
+    
+        <form class="tab-pane" id="configuration" method="get" action=".">
+    
+            <fieldset class="open">
+                <h2>Configuration</h2>
+                <p class="help-text">(<a href="http://developer.weavrs.com/#weavr-configuration" target="_blank">documentation</a>)</p>
+                <a class="api-get-results-button big-button" href="#">get configuration</a>
+                <textarea id="configuration-result" class="no-results" placeholder="results will appear here ..."></textarea>
+            </fieldset>
+            
+        </form>
+        
+        <form class="tab-pane" id="state" method="get" action=".">
+        
+            <fieldset class="open">
+                <h2>State</h2>
+                <p class="help-text">(<a href="http://developer.weavrs.com/#weavr-state" target="_blank">documentation</a>)</p>
+                <a class="api-get-results-button big-button" href="#">get state</a>
+                <textarea id="state-result" class="no-results" placeholder="results will appear here ..."></textarea>
+            </fieldset>
+        
+        </form>
+        
+        <form class="tab-pane" id="run" method="get" action=".">
+        
+            <fieldset class="open">
+                <h2>Run</h2>
+                <p class="help-text">(<a href="http://developer.weavrs.com/#weavr-run" target="_blank">documentation</a>)</p>
+                <label>posts <input type="checkbox" name="posts"></label>
+                <label>before <input type="date" name="before"></label>
+                <label>after <input type="date" name="after"></label>
+                <label>per_page <input type="number" max="100" min="1" step="1" name="per_page"></label>
+                <a class="api-get-results-button big-button" href="#">get run</a>
+                <textarea id="state-result" class="no-results" placeholder="results will appear here ..."></textarea>
+            </fieldset>
+        
+        </form>
+        
+        <form class="tab-pane" id="post" method="get" action=".">
+        
+            <fieldset class="open">
+                <h2>Post</h2>
+                <p class="help-text">(<a href="http://developer.weavrs.com/#weavr-post" target="_blank">documentation</a>)</p>
+                <label>before <input type="date" name="before"></label>
+                <label>after <input type="date" name="after"></label>
+                <label>per_page <input type="number" max="100" min="1" step="1" name="per_page"></label>
+                <select name="category">
+                    <option selected="selected" value="">Category Filter?</option>
+                    <option value="article">article</option>
+                    <option value="chat">chat</option>
+                    <option value="image">image</option>
+                    <option value="video">video</option>
+                    <option value="book">book</option>
+                    <option value="audio">audio</option>
+                    <option value="product">product</option>
+                    <option value="location">location</option>
+                    <option value="status">status</option>
+                    <option value="palette">palette</option>
+                </select>
+                <a class="api-get-results-button big-button" href="#">get posts</a>
+                <textarea id="state-result" class="no-results" placeholder="results will appear here ..."></textarea>
+            </fieldset>
+            
+        </form>
+        
+        <form class="tab-pane" id="location" method="get" action=".">
+            
+            <fieldset class="open">
+                <h2>Location</h2>
+                <p class="help-text">(<a href="http://developer.weavrs.com/#weavr-location" target="_blank">documentation</a>)</p>
+                <label>before <input type="date" name="before"></label>
+                <label>after <input type="date" name="after"></label>
+                <label>per_page <input type="number" max="100" min="1" step="1" name="per_page"></label>
+                <a class="api-get-results-button big-button" href="#">get locations</a>
+                <textarea id="state-result" class="no-results" placeholder="results will appear here ..."></textarea>
+            </fieldset>
+    
+        </form>
+        
+        <form class="tab-pane" id="post-write" method="post" action=".">
+            
+            <fieldset class="open">
+                <h2>Post To Blog</h2>
+                <p class="help-text">(<a href="http://developer.weavrs.com/#weavr-post-write" target="_blank">documentation</a>)</p>
+                <label>title <input type="text" name="title" value="JSWrapper Test Post"></label>
+                <label>body <input type="text" name="body" value="JSWrapper post body text bla bla ..."></label>
+                <label>keywords (tags) <input type="text" name="keywords" value="test"></label>
+                <select name="category">
+                    <option selected="selected" value="article">Category Filter?</option>
+                    <option value="article">article</option>
+                    <option value="chat">chat</option>
+                    <option value="image">image</option>
+                    <option value="video">video</option>
+                    <option value="book">book</option>
+                    <option value="audio">audio</option>
+                    <option value="product">product</option>
+                    <option value="location">location</option>
+                    <option value="status">status</option>
+                    <option value="palette">palette</option>
+                </select>
+                <a class="api-get-results-button big-button" href="#">post (to blog)</a>
+                <textarea id="state-result" class="no-results" placeholder="response will appear here ..."></textarea>
+            </fieldset>
+    
+        </form>
+    
+        <p>See the <a href="http://developer.weavrs.com/">weavrs API v1.0 documentation</a> for more info.</p>
+
+    </div>
+{% endblock page_body %}

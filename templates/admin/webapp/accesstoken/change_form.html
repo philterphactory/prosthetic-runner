@@ -1,0 +1,27 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+{% block object-tools %}
+{% if change %}{% if not is_popup %}
+  <ul class="object-tools">
+    {% block object-tools-items %}
+    {% if has_absolute_url %}<li><a href="../../../r/{{ content_type_id }}/{{ object_id }}/" class="viewsitelink">View token page</a></li>{% endif%}
+    {% endblock %}
+
+    <!-- TI local change -->
+    <li><a href="/admin/accesstoken_blog/{{ object_id }}/" class="viewsitelink">View weavr blog</a></li>
+    <li><a href="/call/{{ object_id }}/" class="viewsitelink">Call method</a></li>
+    <!-- TI end local change -->
+
+  </ul>
+{% endif %}{% endif %}
+
+<!-- TI local change -->
+<form action="/admin/accesstoken_action/{{ object_id }}/" method="post">{% csrf_token %}
+<div class="submit-row" {% if is_popup %}style="overflow: auto;"{% endif %}>
+  <input type="submit" value="Enable token" name="enable" {{ onclick_attrib }}/>
+  <input type="submit" value="Disable token" name="disable" {{ onclick_attrib }}/>
+  <input type="submit" value="Force token run" name="force" {{ onclick_attrib }}/>
+</div>
+<!-- TI end local change -->
+
+{% endblock %}

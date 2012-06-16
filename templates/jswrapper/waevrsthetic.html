@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load string_filters %}
+
+{% block page_specific_css %}
+<link rel="stylesheet" href="/media/css/waevrsthetic.css" media="screen">
+{% endblock page_specific_css %}
+
+{% block environment_javascript_vars %}
+weavrs.weavr_name = "{{ weavr_name }}";
+weavrs.hub_url = "{{ HUB_URL }}";
+weavrs.debug = {% if DEBUG %}true{% else %}false{% endif %};
+{% endblock environment_javascript_vars %}
+
+{% block page_specific_external_javascript_to_load_using_LAB_js %}
+            .script("/media/js/weavrs.prosthetic.waevrsthetic.js?v=001").wait()
+            .script("/media/js/libs/jquery.getimagedata.min.js").wait()
+            .script("/media/js/libs/bitmapdata/BitmapData.js").wait()
+            .script("/media/js/libs/bitmapdata/Point.js").wait()
+            .script("/media/js/libs/bitmapdata/Rectangle.js").wait()
+            .script("/media/js/libs/bitmapdata/Matrix.js").wait()
+            .script("/media/js/libs/bitmapdata/BitmapData.js").wait()
+            .script("/media/js/libs/bitmapdata/filters/ColorMatrixFilter.js").wait()
+{% endblock page_specific_external_javascript_to_load_using_LAB_js %}
+
+{% block body_classes %} prosthetic-page{% endblock body_classes %}
+
+{% block page %}
+
+<canvas class="vom" id="log_canvas" width="800" height="500"></canvas>
+<canvas class="vom" id="v_canvas" width="800" height="500"></canvas>
+<!-- <div id="snapshot">Save Image</div> -->
+
+{% endblock page %}

@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# Usage:
+#   PTK_VERSION=<target_appengine_version> PTK_APPLICATION=<target_appengine_instance> \
+#     ./deploy [--force]
+#
+#     --force disabled checking whether the local copy has been modified
+#
+#   Deploys the current local git repo to app engine. Gets password from
+#     ~/.weavrs_password
+#   and app engine login (email address) from
+#     ~/.weavrs_email
+#   Tries hard to prevent deploys containing local changes.
+
+if [[ ! -f ~/.weavrs_password ]]; then
+    echo "put your weavrs deploy password into '~/.weavrs_password' and try again."
+    exit 1
+fi
+PASSWORD=`cat ~/.weavrs_password`
+
+if [[ ! -f ~/.weavrs_email ]]; then
+    echo "put your weavrs deploy email address into '~/.weavrs_email' and try again."
+    exit 1
+fi
+EMAIL=`cat ~/.weavrs_email`
+
+if [[ -z "$PTK_VERSION" ]]; then
+    echo "Set the target version as \$PTK_VERSION and try again."
+    exit 1
+fi
+
+if [[ -z "$PTK_APPLICATION" ]]; then
+    echo "Set the target application as \$PTK_APPLICATION and try again."
+    exit 1
+fi
+
+FORCE=0
+if [[ "$1" == "--force" ]]; then
+    FORCE=1
+fi
+
+if [[ $FORCE -ne 1 ]]; then
+    # http://stackoverflow.com/questions/855767/can-i-use-git-diff-on-untracked-files
+    # http://stackoverflow.com/questions/2969214/git-programmatically-know-by-how-much-the-branch-is-ahead-behind-a-remote-branch
+
+    untracked=$(git ls-files --others --exclude-standard)
+    if [[ -n "$untracked" ]]; then
+        echo "You have local untracked changes. Please commit them and push upstream, then try again."
+        exit 1
+    fi
+    
+    git diff --quiet HEAD
+    if [[ $? -ne 0 ]]; then
+        echo "You have local changes. Please commit them and push upstream, then try again."
+        exit 1
+    fi
+
+    currentbranch=$(expr $(git symbolic-ref HEAD) : 'refs/heads/\(.*\)')
+    if [[ -z "$currentbranch" ]]; then
+        echo "You don't seem to be on a branch"
+        exit 1
+    fi
+    remote=$(git config branch.$currentbranch.remote)
+    remote_ref=$(git config branch.$currentbranch.merge)
+    remote_branch=$(expr $remote_ref : 'refs/heads/\(.*\)')
+    tracking_branch=refs/remotes/$remote/$remote_branch
+    changes=`git rev-list $tracking_branch..$currentbranch 2>&1`
+    if [[ -n "$changes" ]]; then
+        echo "You have locally committed changes. Please push them upstream and try again."
+        exit 1
+    fi
+fi
+
+time (echo "$PASSWORD" | python ./manage.py deploy --email="$EMAIL" --skip_sdk_update_check --passin --nosyncdb)

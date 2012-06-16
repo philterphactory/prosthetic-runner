@@ -1,0 +1,12 @@
+cron:
+
+# this cron runs quite frequently. The individual prosthetics control
+# their own run frequency in code. For proper production release, you
+# may want to do this differently.
+- description: queue a task for each subject
+  url: /runner/run_cron/
+  schedule: every 10 minutes
+
+- description: ping central control panel
+  url: /runner/ping_phloor/
+  schedule: every 20 minutes

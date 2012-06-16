@@ -1,0 +1,833 @@
+/* 
+-- WEAVRS MAIN STYLE SHEET
+
+  * adaptation from boilerplate css by paul irish
+  http://github.com/paulirish/html5-boilerplate/blob/master/css/style.css
+  
+  style.css contains a reset, font normalization and some base styles.
+  
+  credit is left where credit is due.
+  additionally, much inspiration was taken from these projects:
+	yui.yahooapis.com/2.8.1/build/base/base.css
+	camendesign.com/design/
+	praegnanz.de/weblog/htmlcssjs-kickstart
+*/
+
+/* 
+  html5doctor.com Reset Stylesheet (Eric Meyer's Reset Reloaded + HTML5 baseline)
+  v1.4 2009-07-27 | Authors: Eric Meyer & Richard Clark
+  html5doctor.com/html-5-reset-stylesheet/
+  < -- RESET --
+*/
+* {
+	text-decoration:none;
+	list-style:none;
+	font-family:inherit;
+	font-size:100%;
+	background:transparent;
+	margin:0;
+	padding:0;
+}
+
+/* always force a scrollbar in non-IE */ 
+html > body
+{
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+
+body {
+	position:relative;
+	zoom:100%;
+} 
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  border:0;
+  outline:0;
+  vertical-align:baseline;
+  background:transparent;
+}
+
+time, summary, video, audio, canvas, noscript,
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section { 
+	display:block;
+}
+
+abbr,
+address {
+	font-style:normal;
+}
+
+nav ul { list-style:none; }
+
+blockquote, q { quotes:none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+
+a { margin:0; padding:0; font-size:100%; vertical-align:baseline; background:transparent; }
+
+ins { background-color:#ff9; color:#333; text-decoration:none; }
+
+mark { background-color:#ff9; color:#333; font-style:italic; font-weight:bold; }
+
+del { text-decoration: line-through; }
+
+abbr[title], dfn[title] { border-bottom:1px dotted; cursor:help; }
+
+/* tables still need cellspacing="0" in the markup */
+table { border-collapse:collapse; border-spacing:0; }
+
+hr { display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0; }
+
+input { vertical-align:middle; }
+select { vertical-align: bottom; }
+
+.help-text { display: none; cursor:pointer; }
+
+/* Hide for both screenreaders and browsers
+   css-discuss.incutio.com/wiki/Screenreader_Visibility */
+.hidden { display: none; visibility: hidden; } 
+
+/* Hide only visually, but have it available for screenreaders 
+   www.webaim.org/techniques/css/invisiblecontent/ 
+   Solution from: j.mp/visuallyhidden - Thanks Jonathan Neal! */
+.visuallyhidden { position: absolute !important;	
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px); }
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible { visibility: hidden; }
+
+/* >> The Magnificent CLEARFIX << j.mp/phayesclearfix */
+.clearfix:after  { content: "\0020"; display: block; height: 0; clear: both; visibility: hidden; }
+/* Fix clearfix: blueprintcss.lighthouseapp.com/projects/15318/tickets/5-extra-margin-padding-bottom-of-page */
+.clearfix { zoom: 1; }
+
+/* bicubic resizing for non-native sized IMG: 
+   code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/ */
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+img {
+	vertical-align:bottom;
+}
+
+/* > -- END RESET -- */
+
+
+
+
+
+
+
+
+/* fonts.css from the YUI Library: developer.yahoo.com/yui/
+   Refer to developer.yahoo.com/yui/3/cssfonts/ for font sizing percentages
+
+  There are three custom edits:
+   * remove arial, helvetica from explicit font stack
+   * we normalize monospace styles ourselves
+   * table font-size is reset in the HTML5 reset above so there is no need to repeat
+   
+   < -- TYPOGRAPHY --
+*/
+body { font:13.34px/20px helvetica,arial,freesans,clean,sans-serif; font-style:regular; font-weight:300;} 
+
+/* normalize monospace sizing 
+ * en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome
+ */
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+
+/* Headers (h1,h2,etc) have no default font-size or margin,
+   you'll want to define those yourself. */ 
+h1,h2,h3,h4,h5,h6,dt { 
+	font-weight:normal;
+	font-weight:500;
+	color:#000; 
+}
+
+sub { vertical-align: sub; font-size: smaller; }
+sup { vertical-align: super; font-size: smaller; }
+
+h1,
+h2,
+h3,
+h4 {
+	text-overflow:ellipsis;
+}
+
+h1 {
+	font-size:36px;
+	line-height:50px;
+}
+
+h2 {
+	font-size:24px;
+	line-height:32px;
+}
+
+button, .button, .big-button {
+	font-weight:bold;
+}
+.message {
+	font-size:15px;
+}
+button,
+fieldset h2,
+a.big-button,
+h3 {
+	font-size:18px;
+	line-height:25px;
+}
+
+hgroup h4 {
+	line-height:23px;
+	font-size:14px;
+}
+
+.description p {
+	font-size:14px;
+	line-height:22px;
+	max-width:500px;
+}
+
+ol.steps {
+	margin:20px 0 20px 240px;
+	display:block;
+
+}
+ol.steps li {
+	list-style:decimal;
+	list-style-position:outside;
+	font-size:16px;
+	line-height:25px;
+	max-width:500px;
+	margin:0 0 12px;
+}
+ol.steps li em {
+	color:#aaa;
+}
+
+h1 + h3 {
+	margin-top: 10px;
+}
+
+h3 + h4 {
+	margin-top: 20px;
+}
+
+h2 + h4 {
+	padding-top:5px;
+}
+
+.editor-form-page hgroup h2 {
+	font-size:inherit;
+	line-height:20px;
+	margin:0 0 20px;
+}
+
+h4 {
+	font-size:13.34px;
+	line-height:30px;
+}
+
+figcaption {
+	text-align:center;
+	line-height:40px;
+}
+
+time {
+	text-transform:uppercase;
+	font-size:10px;
+	color:#555;
+	letter-spacing:1px;
+	line-height:22px;
+}
+
+.fn {
+	text-transform:capitalize;
+}
+button,
+a.big-button,
+.thirty {
+	line-height:30px;
+	height:30px;
+}
+input {
+	line-height:20px;
+
+}
+
+sup {
+	vertical-align:super;
+	font-size: .7em;
+	line-height:0px;
+}
+p {
+	font-size:13.34px;
+}
+
+.static .numbered-list,
+p + ol,
+p + ul {
+	margin:20px 0 20px 30px;
+}
+ul.bullet-list li,
+p + ul > li {
+	list-style:disc outside;
+	max-width:480px;
+}
+ol.numbered-list li,
+p + ol > li {
+	list-style:decimal outside;
+	max-width:480px;
+}
+ol.lower-alpha li {
+	list-style:lower-alpha outside;
+	max-width:480px;
+}
+ol.lower-roman li {
+	list-style:lower-roman outside;
+	max-width:480px;
+}
+
+p + q {
+	margin-top:20px;
+	margin-bottom:20px;
+	display:block;
+}
+
+.text-center,
+.message,
+.description,
+hgroup {
+	text-align:center;
+}
+
+.text-left {
+	text-align:left;
+}
+
+p.text-center {
+	color:#777;
+	font-size:14px;
+	padding:10px;
+	border-top:1px solid #eee;
+	border-bottom:1px solid #eee;
+	width:auto !important;
+	max-width:auto !important;
+}
+
+
+/* > -- END TYPOGRAPHY --*/
+
+
+
+
+
+/* < -- ANCHORS -- */
+
+a,
+label,
+a:link,
+a:visited {
+	color:#105fba;/*#ec008c;*/
+	text-decoration:none;
+}
+
+p a,
+a:focus,
+a:hover {
+	text-decoration:underline;
+}
+
+label:hover,
+a:focus,
+a:hover{
+	color:#03408a;
+}
+
+a:active img,
+a:active { 
+	filter:alpha(opacity=50);
+	-ms-filter:alpha(opacity=50);
+	-khtml-opacity: .5;
+	-webkit-opacity: .5;
+	-moz-opacity: .5; 
+	opacity: .5; 
+}
+
+label.checked,
+input:focus + label {
+	color:#333;
+}
+
+a[rel='external']:before {
+
+}
+
+*:target {
+	
+}
+
+
+h1 a,
+h1 a:visited,
+h2 a,
+h2 a:visited,
+h3 a,
+h3 a:visited,
+h4 a,
+h4 a:visited,
+h5 a,
+h5 a:visited,
+a.fn,
+a.fn:visited, {
+	color:#000;
+	text-decoration:none;
+}
+
+
+h1 a:focus,
+h1 a:hover,
+h2 a:focus,
+h2 a:hover {
+	color:#1068ca;
+	text-decoration:none;
+}
+
+a.url:link,
+a.url:visited {
+	color:#1068ca;
+}
+
+a.url:focus,
+a.url:hover {
+	text-decoration:underline;
+	color:#03408a;
+}
+
+.search-term {
+	background:#fffbaf;
+}
+
+/* Accessible focus treatment: people.opera.com/patrickl/experiments/keyboard/test */
+a:hover, a:active { outline: none; }
+
+h1 a:focus,
+h1 a:hover,
+h2 a:focus,
+h2 a:hover,
+h3 a:focus,
+h3 a:hover,
+h4 a:focus,
+h4 a:hover,
+h5 a:focus,
+h5 a:hover,
+a.fn:focus,
+a.fn:hover {
+	color:#1068ca;
+	text-decoration:none;
+}
+
+a.big-button,
+a.big-button:link,
+a.big-button:visited,
+button {
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	display:block;
+	text-decoration:none;
+	text-align:center;
+	padding:5px 0;
+	width:500px;
+	margin:0 auto;
+    background-color: #438acb;
+    color: #eee !important;
+    text-shadow: 0px -1px 1px #034a8b;
+    background-image: -moz-linear-gradient(90deg, #236aab, #438acb);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #438acb), color-stop(1.0, #236aab));
+    background-image: -webkit-linear-gradient(#438acb, #236aab);
+    -moz-box-shadow: 0 1px 3px #555;
+    -webkit-box-shadow: 0 1px 3px #555;
+    box-shadow: 0 1px 3px #555;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#438acb', endColorstr='#236aab'); /* for IE */
+}
+a.big-button:focus,
+a.big-button:active,
+a.big-button:hover,
+button:hover {
+	background-color: #65aced;
+    color: #fff !important;
+    text-shadow: 0px -1px 1px #256cad;
+    background-image: -moz-linear-gradient(90deg, #438acb, #65aced);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #65aced), color-stop(1.0, #438acb));
+    background-image: -webkit-linear-gradient(#65aced, #438acb);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#65aced', endColorstr='#438acb'); /* for IE */
+}
+
+
+/* > -- END ANCHORS -- */
+
+/* < -- FORMS -- */
+
+textarea,
+input[type="number"],
+input[type="text"],
+input[type="url"],
+input[type="search"],
+input[type="email"] {
+    display: block;
+    width: 500px;
+    border:1px solid;
+    -webkit-appearance: none;
+    border-radius: 0px;
+    -webkit-border-radius:0px;
+}
+fieldset {
+    margin-bottom: 20px;
+    padding-left: 0px;
+    position: relative;
+}
+
+form > fieldset {
+    margin:10px auto;
+    padding:0 0 30px 240px;
+    border-top: none;
+    overflow: hidden;
+    width:740px;
+}
+form > fieldset,
+form > fieldset > h2 {
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+}
+form button {
+	margin:10px 0;
+	width:510px;
+	line-height:30px;
+}
+input {
+    padding:10px;
+    outline:0;
+    background-color:#fff;
+    display:block;
+    clear:both;
+    width:485px !important;
+	font-size:1.5em;
+}
+label {
+	line-height:30px;
+	padding-bottom:20px;
+	display:block;
+}
+form > fieldset > h2 { 
+    cursor: pointer;
+    position:relative;
+    padding: 10px 0 10px 240px;
+    margin-left:-240px;
+    margin-bottom:30px;
+
+}
+form > fieldset > h2:hover:before {
+    background-color:#fff;
+    color:#555;
+    -moz-box-shadow: inset 0px -4px 8px 1px rgba(70,70,0,0.15), inset 0px 1px 1px 0px rgba(70,70,0,0.2), 0px 1px 1px #fff;
+    -webkit-box-shadow: inset 0px -4px 8px 1px rgba(70,70,0,0.15), inset 0px 1px 1px 0px rgba(70,70,0,0.2), 0px 1px 1px #fff;
+    box-shadow: inset 0px -4px 8px 1px rgba(70,70,0,0.15), inset 0px 1px 1px 0px rgba(70,70,0,0.2), 0px 1px 1px #fff;
+}
+form > fieldset.open:hover > h2:before {
+    background-color:#fffedf !important;
+    -moz-box-shadow: inset 0px -4px 8px 0px rgba(70,70,0,0.15), inset 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 1px #fff !important;
+    -webkit-box-shadow: inset 0px -4px 8px 0px rgba(70,70,0,0.15), inset 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 1px #fff !important;
+    box-shadow: inset 0px -4px 8px 0px rgba(70,70,0,0.15), inset 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 1px #fff !important;
+}
+form > fieldset.open:hover > h2:hover:before {
+    background-color:#ffffce !important;
+}
+form > fieldset.error > h2:before,
+form > fieldset.error > h2:hover:before,
+form > fieldset.error:hover > h2:hover:before,
+form > fieldset.error:hover > h2:before {
+    background-color:#ffeeee !important;
+    -moz-box-shadow: inset 0px -4px 8px 0px rgba(70,0,0,0.15), inset 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 1px #fff !important;
+    -webkit-box-shadow: inset 0px -4px 8px 0px rgba(70,0,0,0.15), inset 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 1px #fff !important;
+    box-shadow: inset 0px -4px 8px 0px rgba(70,0,0,0.15), inset 0px 1px 1px 0px rgba(0,0,0,0.2), 0px 1px 1px #fff !important;
+}
+form > fieldset.open > h2 {
+    -moz-border-radius:10px 10px 0 0;
+    -webkit-border-radius:10px 10px 0 0;
+    border-radius:10px 10px 0 0;
+}
+
+
+.textboxlist-bits,
+textarea,
+input[type="text"],
+input[type="url"],
+input[type="search"],
+input[type="email"],
+input[type="password"] {
+    -moz-box-shadow: inset 0px 1px 3px 1px rgba(0,0,0,0.1);
+    -webkit-box-shadow: inset 0px 1px 3px 1px  rgba(0,0,0,0.1);
+    box-shadow: inset 0px 2px 3px 1px  rgba(0,0,0,0.1);
+}
+button + p,
+button + a {
+    display:block;
+    width:480px;
+    text-align: right;
+    line-height:30px;
+    padding:10px 0;
+}
+/* fallback placeholder */
+input.placeholder {
+    color:#aaa;
+}
+/* hand cursor on clickable input elements */
+label, input[type=button], input[type=submit], button, .button { cursor: pointer; }
+
+button { overflow: hidden; height: 40px; display: block; }
+#active-filters li,
+fieldset h2,
+.help-text {
+    color:#989898;
+}
+
+
+
+form > fieldset h2:hover {
+    color: #222 !important;
+}
+
+form > fieldset.open:hover h2:hover {
+    color: #444 !important;
+}
+form > fieldset.open:hover h2:hover {
+    background-color:#ffffae;
+}
+
+form > fieldset.open:hover h2 {
+    background-color:#fffdbe;
+    color:#777;
+}
+
+form > fieldset.open:hover,
+form > fieldset:hover {
+    background-color: #ffffdf !important;
+}
+#prosthetic-auth-form > fieldset.no-hilite:hover,
+form > fieldset {
+    background-color: #f0f0f0 !important;
+}
+
+form > fieldset > h2:hover,
+form > fieldset.open > h2 {
+    background-color:#dadada;
+    color:#555;
+}
+form > fieldset > h2 {
+    background-color:#e4e4e4;
+    color:#888;
+}
+
+form > fieldset:hover p.help-text {
+    color: #ffffdf;
+}
+
+form > fieldset.error:hover p.help-text {
+    color: #fff4f2;
+}
+form > fieldset.open#home p.help-text,
+form > fieldset.open#work p.help-text,
+form > fieldset p.help-text-focus,
+form > fieldset:hover p.help-text:hover {
+    color: #515151 !important;
+}
+/* needs to stay whiteas loading gif uses white bg */
+button.submitting:hover,
+button.submitting {
+    background-color: #fff;
+    color:#fff !important;
+}
+button.disabled:hover,
+button.disabled {
+    background-color: #ccc;
+    color:#fff !important;
+}
+button,
+textarea,
+input[type="number"],
+input[type="text"],
+input[type="url"],
+input[type="search"],
+input[type="email"] {
+    border-color:#bbb #d8d8d8 #e3e3e3;
+}
+
+form > fieldset.error:hover h2,
+form > fieldset.error h2 {
+    color: #c55;
+}
+
+form > fieldset.error h2 {
+    background-color:#ffe0dd;
+}
+
+form > fieldset.error:hover h2 {
+    background-color:#ffdad7;
+    color: #c44;
+}
+body form > fieldset.error:hover h2:hover {
+    background-color:#ffd7d4 !important;
+    color: #a11 !important;
+}
+form > fieldset.error label,
+form ul.errorlist {
+    color: #a11;
+}
+body form > fieldset.error:hover,
+body form > fieldset.error {
+    background-color: #ffebe9 !important;
+}
+fieldset.error .help-text {
+    color:#ffebe9 !important;
+}
+fieldset.error:hover .help-text {
+    color:#c44 !important;
+}
+
+fieldset.error input.textboxlist-bit-editable-input,
+fieldset.error .textboxlist-bits,
+input[type="url"].error,
+input[type="text"].error,
+input[type="email"].error,
+input[type="number"].error {
+    border-color: #c99 #ebb #fdd;
+    background-color: #fff7f5;
+}
+fieldset.error input.textboxlist-bit-editable-input:focus,
+fieldset.error .textboxlist-focus .textboxlist-bits,
+input.error:focus {
+    background-color: #ffe4e2;
+}
+button {
+	border:none;
+	text-transform:uppercase;
+}
+input:focus {
+    color:#333;
+    background-color:#ffffd1;
+}
+/* > -- END FORMS -- */
+
+
+body > section {
+	padding:30px 0;
+}
+
+body > section > article,
+body > footer > nav {
+	width:1000px;
+	margin:0 auto;
+}
+header nav ul li {
+    display: block;
+    float: left;
+    margin: 0 20px 0 0;
+}
+nav li a {
+    font-size: 15px;
+}
+body > section > article > header {
+	width:980px;
+	margin: 0 auto 20px;
+}
+
+hgroup {
+	margin:0 auto 20px;
+	width:800px;
+}
+
+body > section > article > header p {
+	margin:20px auto 0px;
+	clear:both;
+}
+p:first-child {
+	margin-top:0px;
+}
+
+body {
+	background-color:#bbb;
+}
+body > section {
+	background-color:#fff;
+}
+
+footer nav {
+	position:relative;
+}
+footer nav ul li {
+    display: block;
+    margin: 0;
+    text-align:center;
+}
+
+.description {
+	margin:0 0 20px 0;
+}
+.message {
+	margin:20px 0;
+	background-color:#ffff8e;
+	padding:10px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+}
+
+section.page-body {
+	padding-bottom:40px;
+}
+
+ul#legals {
+	margin-top:40px;
+}
+#attribution span {
+	display:block;
+	color:#888;
+	text-transform:capitalize;
+	font-size:12px;
+}
+#attribution {
+	background:url("/media/images/phph-logo.gif") no-repeat 78px 8px;
+	width:200px;
+	margin:0 auto;
+	padding:60px 0 0 0;
+}
+#attribution a {
+	color:#fdfdfd;
+	font-size:19px;
+	text-shadow:none;
+}
+
+a[href*="soundcloud.com/oauth"] {
+	display:block;
+	float:left;
+	padding:5px 20px 30px 0;
+	border-right:1px solid #ddd;
+	margin-right:20px;
+}

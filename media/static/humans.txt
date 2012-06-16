@@ -1,0 +1,49 @@
+/* the humans responsible & colophon */
+/* humanstxt.org */
+
+
+/* TEAM */
+  Weavrs Prosthetic By: Philter Phactory
+  Site: http://weavrs.com/
+  Twitter: @weavrs
+  Location: all over
+
+/* THANKS */
+  Names (& URL): twitter.com, flickr.com, etsy.com, google books, google places, youtube.com, last.fm, colourlovers.com, wikipedia
+
+/* SITE */
+  Standards: HTML5, CSS3
+  Components: Modernizr, jQuery
+  Software: Google App Engine, Python, Django
+
+
+
+                     `:oyhddhys+-                 
+                   -sddddddddddddh/`              
+                  oddddddddddddddddy.             
+                 +ddddddddddddddddddh`            
+         :shhhy+-dddddddddddddddddddd/            
+       `sdddddddddddddddddddddddddddd+            
+       -dddddddddddddddddddddddddddddo+ooo+/-`    
+       `yddddddddddddddddddddddddddddddddddddh+.  
+   ./osyhddddddddddddddddddddddddddddddddddddddh/ 
+ .shdddddddddddddddy+:dddho:yddds//dddddddddddddd:
+.hddddddddddddddy+.` .ho:`  ss/.  :ddddddddddddddy
++dddddddddddddd/`     `     `     :ddddddddddddddy
++dddddddddddddd-                  :dddddddddddddd:
+`yddddddddddddd-                  :ddddddddddddh/ 
+ `+yddddddddddd-                  :ddddddddddy+.  
+   `-/+oooooooo.                  .ooooooo+:-`    
+                 `.`          `.                  
+              `.+ydyo-`    `:ohhs/.               
+            `:ohddddddyo-:ohddddddho-             
+             ``yddddddddddddddddddo``             
+               yddddddddddddddddddo               
+              :ddddddsddddddydddddh.              
+            `+ddddddy:dddddd-hdddddh/`            
+.-------::+shddddddy.:dddddd`-hddddddho/::--------
+sddddddddddddddddd+` :dddddd` .sdddddddddddddddddh
+sddddddddddddddh+.   :dddddd`   -ohddddddddddddddh
+odddhhhhhhyso/.    ../dddddd-.`   `-/oyyhhhhhhdddh
+                   .+yddddddy/.                   
+                      .+yy/`                      
