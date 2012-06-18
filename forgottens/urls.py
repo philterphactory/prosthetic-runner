@@ -23,12 +23,11 @@
 # Phactory Ltd..
 #
 
-
-from django.conf.urls import *
+from django.conf.urls.defaults import *
 
 import views
 
 urlpatterns = patterns('',
-    ( r"^ping", views.ping ),
+    ( r"^ping", views.ping )
 )
 
